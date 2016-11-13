@@ -2,7 +2,7 @@ $(document).ready(function () {
     $("#btn_admin").click(function () {
         var val = $('#input_text').val();
         if (val !== '') {
-            var url = "admin.html?q=" + val;
+            var url = "create_admin.html?q=" + val;
             window.location.href = url;
             return false;
         }
@@ -11,7 +11,7 @@ $(document).ready(function () {
     $("#btn_leader").click(function () {
         var val = $('#input_text').val();
         if (val !== '') {
-            var url = "team.html?q=" + val;
+            var url = "create_team.html?q=" + val;
             window.location.href = url;
             return false;
         }
@@ -20,7 +20,7 @@ $(document).ready(function () {
     $("#btn_member").click(function () {
         var val = $('#input_text').val();
         if (val !== '') {
-            var url = "member.html?q=" + val;
+            var url = "create_member.html?q=" + val;
             window.location.href = url;
             return false;
         }

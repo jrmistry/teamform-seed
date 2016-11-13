@@ -5,7 +5,7 @@ $(document).ready(function(){
 	var eventName = getURLParameter("q");
 	if (eventName != null && eventName !== '' ) {
 		$('#text_event_name').text("Event name: " + eventName);
-		
+
 	}
 
 });
@@ -74,12 +74,6 @@ angular.module('teamform-team-app', ['firebase'])
 		$scope.$apply();
 		
 	}
-	
-	
-	
-	
-	
-	
 
 	$scope.changeCurrentTeamSize = function(delta) {
 		var newVal = $scope.param.currentTeamSize + delta;
@@ -200,11 +194,4 @@ angular.module('teamform-team-app', ['firebase'])
 		}
 		
 	}
-	
-	
-	
-	
-	
-	
-		
 }]);
