@@ -27,7 +27,7 @@ angular.module('teamform')
 				else {
 					$scope.selection = [];
 				}
-				$scope.$apply();
+				//$scope.$apply();
 			});
 		}
 	};
@@ -45,13 +45,7 @@ angular.module('teamform')
 			var refPath = eventName + "/member/" + userID;
 			var ref = firebase.database().ref(refPath);
 			
-			ref.set(newData, function(){
-				// complete call back
-				//alert("data pushed...");
-				
-				// Finally, go back to the front-end
-				$state.go('landing');
-			});
+			ref.set(newData);
 		}
 	};
 	
@@ -61,7 +55,7 @@ angular.module('teamform')
 		
 		// Link and sync a firebase object
 		$scope.selection = [];		
-		$scope.toggleSelection = function (item) {
+		/*$scope.toggleSelection = function (item) {
 			var idx = $scope.selection.indexOf(item);    
 			if (idx > -1) {
 				$scope.selection.splice(idx, 1);
@@ -69,7 +63,7 @@ angular.module('teamform')
 			else {
 				$scope.selection.push(item);
 			}
-		};
+		};*/
 	
 		$scope.teams = $firebaseArray(ref);
 		/*$scope.teams.$loaded()
