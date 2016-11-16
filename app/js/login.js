@@ -3,8 +3,8 @@ var twist = {};
 angular.module('teamform')
         .controller(
         'LoginCtrl',
-        ['$scope', '$firebaseObject', '$firebaseArray', '$state',
-            function($scope, $firebaseObject, $firebaseArray, $state) {
+        ['$scope', '$firebaseObject', '$firebaseArray', '$state', 'EventService',
+            function($scope, $firebaseObject, $firebaseArray, $state, EventService) {
                 $scope.goToAdmin = function() {
                     $state.go("admin", {event: $scope.event});
                 };
@@ -17,18 +17,17 @@ angular.module('teamform')
                     $state.go("member", {event: $scope.event});
                 };
 
-                var ref = firebase.database().ref("events");
-                var list = $firebaseArray(ref);
-                list.$loaded().then(function(data){
-                    console.log("loaded");
+                EventService.getAllEvents().$loaded(function(data){
                     console.log(data);
                     twist = data;
                 });
 
-                $scope.retrieveOnceFirebase(firebase, "events", function(data) {
-                    console.log("value");
-                    testing = data;
+                EventService.getEvent("Event1").$loaded(function(data){
+                    console.log(data.maxTeamSize);
                     console.log(data);
+                    testing = data;
+                    data.maxTeamSize = 15;
+                    data.$save();
                 });
 
             }
