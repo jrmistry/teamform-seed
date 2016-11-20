@@ -3,8 +3,8 @@ var twist = {};
 angular.module('teamform')
         .controller(
         'LoginCtrl',
-        ['$scope', '$firebaseObject', '$firebaseArray', '$state', 'EventService',
-            function($scope, $firebaseObject, $firebaseArray, $state, EventService) {
+        ['$scope', '$firebaseObject', '$firebaseArray', '$state', 'Modals',
+            function($scope, $firebaseObject, $firebaseArray, $state, modals) {
                 $scope.goToAdmin = function() {
                     $state.go("admin", {event: $scope.event});
                 };
@@ -16,12 +16,7 @@ angular.module('teamform')
                 $scope.goToMember = function() {
                     $state.go("member", {event: $scope.event});
                 };
-
-                console.log(EventService.getAdmins("Event1").$loaded(function(data){
-                    console.log(data);
-                    twist = data;
-                }));
-
+                
                 // EventService.getEvent("Event1").$loaded(function(data){
                 //     console.log(data.maxTeamSize);
                 //     console.log(data);

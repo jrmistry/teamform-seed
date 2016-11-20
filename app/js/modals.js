@@ -6,9 +6,9 @@
      https://github.com/firebase/angularfire/blob/master/docs/guide/synchronized-arrays.md#api-summary
      */
 
-    angular.module('teamform').service('EventService',
+    angular.module('teamform').service('Modals',
         ['$firebaseObject', '$firebaseArray', '$rootScope',
-            function ($firebaseObject, $firebaseArray, $rootScope) {
+            function ($firebaseObject, $firebaseArray) {
                 var EVENT = 'events';
                 var ADMIN = 'admin';
                 var TEAM = 'teams';
