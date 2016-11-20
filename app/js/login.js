@@ -17,18 +17,18 @@ angular.module('teamform')
                     $state.go("member", {event: $scope.event});
                 };
 
-                EventService.getAllEvents().$loaded(function(data){
+                console.log(EventService.getAdmins("Event1").$loaded(function(data){
                     console.log(data);
                     twist = data;
-                });
+                }));
 
-                EventService.getEvent("Event1").$loaded(function(data){
-                    console.log(data.maxTeamSize);
-                    console.log(data);
-                    testing = data;
-                    data.maxTeamSize = 15;
-                    data.$save();
-                });
+                // EventService.getEvent("Event1").$loaded(function(data){
+                //     console.log(data.maxTeamSize);
+                //     console.log(data);
+                //     testing = data;
+                //     data.maxTeamSize = 15;
+                //     data.$save();
+                // });
 
             }
         ]
