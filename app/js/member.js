@@ -2,23 +2,24 @@ angular.module('teamform')
 .controller('MemberCtrl', ['$scope', '$firebaseObject', '$firebaseArray', '$stateParams', '$state',
 	function($scope, $firebaseObject, $firebaseArray, $stateParams, $state) {
 
-    var eventName = $stateParams.event;
-    $scope.event = eventName;
-	$scope.userID = "";
-	$scope.userName = "";	
+    var eventID = $stateParams.event;
+    $scope.event = eventID;
+	$scope.memberID = "";
+	$scope.memberName = "";	
 	$scope.teams = {};
+	$scope.selection = [];
 
 	$scope.loadFunc = function() {
-		var userID = $scope.userID;
+		var userID = $scope.memberID;
 		if ( userID !== '' ) {
 			
-			var refPath = eventName + "/member/" + userID;
+			var refPath = "events/" + eventID + "/members/" + userID;
 			$scope.retrieveOnceFirebase(firebase, refPath, function(data) {
 								
-				if ( data.child("memberName").val() != null ) {
-					$scope.userName = data.child("memberName").val();
+				if ( data.child("name").val() != null ) {
+					$scope.memberName = data.child("name").val();
 				} else {
-					$scope.userName = "";
+					$scope.memberName = "";
 				}
 				
 				if (data.child("selection").val() != null ) {
@@ -33,46 +34,38 @@ angular.module('teamform')
 	};
 	
 	$scope.saveFunc = function() {		
-		var userID = $.trim( $scope.userID );
-		var userName = $.trim( $scope.userName );
+		var newMemberID = $.trim( $scope.memberID );
+		var newMemberName = $.trim( $scope.memberName );
 		
-		if ( userID !== '' && userName !== '' ) {	
+		if ( newMemberID !== '' && newMemberName !== '' ) {	
 			var newData = {				
-				'memberName': userName,
+				'name': newMemberName,
 				'selection': $scope.selection
 			};
 			
-			var refPath = eventName + "/member/" + userID;
+			var refPath = "events/" + eventID + "/members/" + newMemberID;
 			var ref = firebase.database().ref(refPath);
 			
 			ref.set(newData);
-		}
+		};
 	};
 	
 	$scope.refreshTeams = function() {
-		var refPath = eventName + "/team";
+		var refPath = "events/" + eventID + "/teams";
 		var ref = firebase.database().ref(refPath);
-		
-		// Link and sync a firebase object
-		$scope.selection = [];		
-		/*$scope.toggleSelection = function (item) {
+
+		$scope.toggleSelection = function (item) {
 			var idx = $scope.selection.indexOf(item);    
 			if (idx > -1) {
 				$scope.selection.splice(idx, 1);
 			}
 			else {
 				$scope.selection.push(item);
-			}
-		};*/
-	
+			};
+		};
+		
+		// Link and sync a firebase object
 		$scope.teams = $firebaseArray(ref);
-		/*$scope.teams.$loaded()
-			.then( function(data) {
-			}) 
-			.catch(function(error) {
-				// Database connection error handling...
-				//console.error("Error:", error);
-			});*/
 	};
         
 	$scope.refreshTeams(); // call to refresh teams...

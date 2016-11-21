@@ -23,8 +23,8 @@
                 url: '/login',
                 templateUrl: 'app/partials/login.html',
                 controller: 'LoginCtrl'
-            }).state('admin', {
-                url: '/admin/:event',
+            }).state('events', {
+                url: '/events/:event',
                 templateUrl: 'app/partials/admin.html',
                 controller: 'AdminCtrl'
             }).state('member', {

@@ -2,121 +2,91 @@ angular.module('teamform')
 .controller('TeamCtrl', ['$scope', '$firebaseObject', '$firebaseArray',  '$stateParams', '$state',
     function($scope, $firebaseObject, $firebaseArray, $stateParams, $state) {
 
-	var refPath = "";
-	var eventName = $stateParams.event;
-	$scope.event = eventName;
-
-	// TODO: implementation of MemberCtrl	
-	$scope.param = {
-		"teamName" : '',
-		"currentTeamSize" : 0,
+	$scope.event = {};
+	$scope.team = {
+		"teamID" : "",
+		"size" : 0,
 		"teamMembers" : []
 	};
+	var refPath = "";
+	var eventID = $stateParams.event;
+	var refPath = "events/" + eventID;
+    var ref = firebase.database().ref(refPath);
 
-	refPath =  eventName + "/admin";
-	$scope.retrieveOnceFirebase(firebase, refPath, function(data) {
-
-		if ( data.child("param").val() != null ) {
-			$scope.range = data.child("param").val();
-			$scope.param.currentTeamSize = parseInt(($scope.range.minTeamSize + $scope.range.maxTeamSize)/2);
-			$scope.$apply(); // force to refresh
-			$('#team_page_controller').show(); // show UI
-			
-		} 
-	});
+    // Link and sync a firebase object
+    $scope.event = $firebaseObject(ref);
+	$scope.event.$loaded()
+		.then(function (data) {
+			$scope.team.size = parseInt(($scope.event.minTeamSize + $scope.event.maxTeamSize)/2);
+			$('#team_page_controller').show();
+		});
 	
+	refPath = "events/" + eventID + "/members";
+	$scope.members = [];
+	$scope.members = $firebaseArray(firebase.database().ref(refPath));
 	
-	refPath = eventName + "/member";	
-	$scope.member = [];
-	$scope.member = $firebaseArray(firebase.database().ref(refPath));
-	
-	
-	refPath = eventName + "/team";	
-	$scope.team = [];
-	$scope.team = $firebaseArray(firebase.database().ref(refPath));
-	
+	refPath = "events/" + eventID + "/teams";
+	$scope.teams = [];
+	$scope.teams = $firebaseArray(firebase.database().ref(refPath));
 	
 	$scope.requests = [];
-	$scope.refreshViewRequestsReceived = function() {
-		
-		//$scope.test = "";		
-		$scope.requests = [];
-		var teamID = $.trim( $scope.param.teamName );	
-				
-		$.each($scope.member, function(i,obj) {			
-			//$scope.test += i + " " + val;
-			//$scope.test += obj.$id + " " ;
-			
-			var userID = obj.$id;
+	$scope.refreshViewRequestsReceived = function() {		
+		var teamID = $.trim($scope.team.teamID);
+
+		$.each($scope.members, function(i,obj) {
+			var memberID = obj.$id;
 			if ( typeof obj.selection != "undefined"  && obj.selection.indexOf(teamID) > -1 ) {
-				//$scope.test += userID + " " ;
-				
-				$scope.requests.push(userID);
-			}
+				$scope.requests.push(memberID);
+			};
 		});
 		$scope.$apply();
 	};
 
 	$scope.changeCurrentTeamSize = function(delta) {
-		var newVal = $scope.param.currentTeamSize + delta;
-		if (newVal >= $scope.range.minTeamSize && newVal <= $scope.range.maxTeamSize ) {
-			$scope.param.currentTeamSize = newVal;
-		} 
+		var newVal = $scope.team.size + delta;
+		if (newVal >= $scope.event.minTeamSize && newVal <= $scope.event.maxTeamSize ) {
+			$scope.team.size = newVal;
+		};
 	};
 
 	$scope.saveFunc = function() {
-		var teamID = $.trim( $scope.param.teamName );
+		var teamID = $.trim( $scope.team.teamID );
 		
 		if ( teamID !== '' ) {
-			var newData = {				
-				'size': $scope.param.currentTeamSize,
-				'teamMembers': $scope.param.teamMembers
+			var newData = {
+				'size': $scope.team.size,
+				'teamMembers': $scope.team.teamMembers
 			};		
 			
-			var refPath = eventName + "/team/" + teamID;
+			var refPath = "events/" + eventID + "/teams/" + teamID;
 			var ref = firebase.database().ref(refPath);
-			// for each team members, clear the selection in /[eventName]/team/
+			// for each team members, clear the selection in /[eventID]/team/
 			
-			$.each($scope.param.teamMembers, function(i,obj){
-				//$scope.test += obj;
-				var rec = $scope.member.$getRecord(obj);
+			$.each($scope.team.teamMembers, function(i,obj){
+				var rec = $scope.members.$getRecord(obj);
 				rec.selection = [];
-				$scope.member.$save(rec);
+				$scope.members.$save(rec);
 			});
 
-			ref.set(newData, function(){			
+			ref.set(newData, function(){
 
-				// console.log("Success..");
-				
-				// Finally, go back to the front-end
-				// window.location.href= "index.html";
 			});
-		}
+		};
 	};
 	
 	$scope.loadFunc = function() {
-		
-		var teamID = $.trim( $scope.param.teamName );		
-		var eventName = $scope.event;
-		var refPath = eventName + "/team/" + teamID;
+		var teamID = $.trim( $scope.team.teamID );
+		var refPath = "events/" + eventID + "/teams/" + teamID;
 
 		$scope.retrieveOnceFirebase(firebase, refPath, function(data) {	
-
 			if ( data.child("size").val() != null ) {
-				
-				$scope.param.currentTeamSize = data.child("size").val();
-				
-				$scope.refreshViewRequestsReceived();
-								
-				
-			} 
+				$scope.team.size = data.child("size").val();
+				$scope.refreshViewRequestsReceived();	
+			}; 
 			
 			if ( data.child("teamMembers").val() != null ) {
-				
-				$scope.param.teamMembers = data.child("teamMembers").val();
-				
-			}
-			
+				$scope.team.teamMembers = data.child("teamMembers").val();
+			};
 			$scope.$apply(); // force to refresh
 		});
 	};
@@ -125,35 +95,31 @@ angular.module('teamform')
 	$scope.deleteFunc = function() {
 	    if (confirm("Are you sure you want to delete this team from the event?\nCurrent team members will not be deleted.\n \nWARNING- this cannot be undone!")){
 		//remove the event from firebase, including all child nodes
-		var teamID = $.trim( $scope.param.teamName );		
-		var refPath = eventName + "/team/" + teamID ;
+		var teamID = $.trim( $scope.team.teamID );		
+		var refPath = "events/" + eventID + "/teams/" + teamID ;
 		ref = firebase.database().ref(refPath);
 		ref.remove();
         }
 	};
 	
-	$scope.processRequest = function(r) {
-		//$scope.test = "processRequest: " + r;
-		
-		if ( 
-		    $scope.param.teamMembers.indexOf(r) < 0 && 
-			$scope.param.teamMembers.length < $scope.param.currentTeamSize  ) {
+	$scope.processRequest = function(request) {
+		if ($scope.team.teamMembers.indexOf(request) < 0 && 
+			$scope.team.teamMembers.length < $scope.team.size) {
 				
 			// Not exists, and the current number of team member is less than the preferred team size
-			$scope.param.teamMembers.push(r);
+			$scope.team.teamMembers.push(request);
+			$scope.request.remove(request);
 			
 			$scope.saveFunc();
-		}
+		};
 	};
 	
 	$scope.removeMember = function(member) {
-		
-		var index = $scope.param.teamMembers.indexOf(member);
+		var index = $scope.team.teamMembers.indexOf(member);
 		if ( index > -1 ) {
-			$scope.param.teamMembers.splice(index, 1); // remove that item
+			$scope.team.teamMembers.splice(index, 1); // remove that item
 			
 			$scope.saveFunc();
-		}
-		
+		};
 	};
 }]);
