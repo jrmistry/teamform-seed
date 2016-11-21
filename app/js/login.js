@@ -4,7 +4,7 @@ angular.module('teamform')
         ['$scope', '$firebaseObject', '$firebaseArray', '$state',
             function($scope, $firebaseObject, $firebaseArray, $state) {
                 $scope.goToAdmin = function() {
-                    $state.go("admin", {event: $scope.event});
+                    $state.go("events", {event: $scope.event});
                 };
 
                 $scope.goToTeam = function() {
