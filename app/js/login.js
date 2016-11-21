@@ -1,5 +1,3 @@
-var testing = {};
-var twist = {};
 angular.module('teamform')
         .controller(
         'LoginCtrl',
@@ -16,15 +14,6 @@ angular.module('teamform')
                 $scope.goToMember = function() {
                     $state.go("member", {event: $scope.event});
                 };
-                
-                // EventService.getEvent("Event1").$loaded(function(data){
-                //     console.log(data.maxTeamSize);
-                //     console.log(data);
-                //     testing = data;
-                //     data.maxTeamSize = 15;
-                //     data.$save();
-                // });
-
             }
         ]
 );
