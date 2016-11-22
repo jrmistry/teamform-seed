@@ -7,7 +7,7 @@
      */
 
     angular.module('teamform').service('Models',
-        ['$firebaseObject', '$firebaseArray', '$rootScope',
+        ['$firebaseObject', '$firebaseArray',
             function ($firebaseObject, $firebaseArray) {
                 var EVENT = 'events';
                 var ADMIN = 'admin';
@@ -23,7 +23,7 @@
                     return $firebaseObject(firebase.database().ref(path));
                 };
 
-                this.getAdmins = function(eventId) {
+                this.getAdmin = function(eventId) {
                     var path = [EVENT, eventId, ADMIN].join("/");
                     return $firebaseObject(firebase.database().ref(path));
                 };
@@ -46,7 +46,7 @@
                 this.getMember = function(eventId, memberId) {
                     var path = [EVENT, eventId, MEMBER, memberId].join("/");
                     return $firebaseObject(firebase.database().ref(path));
-                }
+                };
 
             }]);
 }(angular));
