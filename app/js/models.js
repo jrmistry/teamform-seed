@@ -47,6 +47,5 @@
                     var path = [EVENT, eventId, MEMBER, memberId].join("/");
                     return $firebaseObject(firebase.database().ref(path));
                 };
-
             }]);
 }(angular));

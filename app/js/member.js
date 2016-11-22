@@ -1,72 +1,57 @@
 angular.module('teamform')
-.controller('MemberCtrl', ['$scope', '$firebaseObject', '$firebaseArray', '$stateParams', '$state',
-	function($scope, $firebaseObject, $firebaseArray, $stateParams, $state) {
+.controller('MemberCtrl', ['$scope', '$firebaseObject', '$firebaseArray', '$stateParams', '$state', 'Models',
+	function($scope, $firebaseObject, $firebaseArray, $stateParams, $state, models) {
 
-    var eventID = $stateParams.event;
-    $scope.event = eventID;
-	$scope.memberID = "";
-	$scope.memberName = "";	
-	$scope.teams = {};
-	$scope.selection = [];
+    $scope.memberID = "";
+	$scope.member = {};
+	$scope.member.name = "";
+	$scope.member.selection = [];
+
+	$scope.eventID = $stateParams.event;
+	$scope.members = models.getAllMembers($scope.eventID);
+	$scope.teams = models.getAllTeams($scope.eventID);
 
 	$scope.loadFunc = function() {
 		var userID = $scope.memberID;
 		if ( userID !== '' ) {
-			
-			var refPath = "events/" + eventID + "/members/" + userID;
-			$scope.retrieveOnceFirebase(firebase, refPath, function(data) {
-								
-				if ( data.child("name").val() != null ) {
-					$scope.memberName = data.child("name").val();
-				} else {
-					$scope.memberName = "";
-				}
-				
-				if (data.child("selection").val() != null ) {
-					$scope.selection = data.child("selection").val();
-				}
-				else {
-					$scope.selection = [];
-				}
-				//$scope.$apply();
-			});
-		}
-	};
-	
-	$scope.saveFunc = function() {		
-		var newMemberID = $.trim( $scope.memberID );
-		var newMemberName = $.trim( $scope.memberName );
-		
-		if ( newMemberID !== '' && newMemberName !== '' ) {	
-			var newData = {				
-				'name': newMemberName,
-				'selection': $scope.selection
-			};
-			
-			var refPath = "events/" + eventID + "/members/" + newMemberID;
-			var ref = firebase.database().ref(refPath);
-			
-			ref.set(newData);
-		};
-	};
-	
-	$scope.refreshTeams = function() {
-		var refPath = "events/" + eventID + "/teams";
-		var ref = firebase.database().ref(refPath);
 
-		$scope.toggleSelection = function (item) {
-			var idx = $scope.selection.indexOf(item);    
-			if (idx > -1) {
-				$scope.selection.splice(idx, 1);
-			}
-			else {
-				$scope.selection.push(item);
+			$scope.member = models.getMember($scope.eventID, userID);
+			$scope.member.$loaded()
+                .then(function (data) {
+					if ($scope.member.name == null) {
+						$scope.member.name = "";
+					};
+					if ($scope.member.selection == null) {
+						$scope.member.selection = [];
+					};
+				});
+		};
+	};
+	
+	$scope.saveFunc = function() {
+		$scope.memberID = $.trim( $scope.memberID );
+		$scope.member.name = $.trim( $scope.member.name );
+		
+		if ( $scope.memberID !== '' && $scope.member.name !== '' ) {
+			if ($scope.members.$indexFor($scope.memberID) == -1) {
+				var newData = {
+				'name': $scope.member.name,
+				'selection': $scope.member.selection
+				};
+				$scope.members.$ref().child($scope.memberID).set(newData);
+			} else {
+				$scope.member.$save();
 			};
 		};
-		
-		// Link and sync a firebase object
-		$scope.teams = $firebaseArray(ref);
 	};
-        
-	$scope.refreshTeams(); // call to refresh teams...
+
+	$scope.toggleSelection = function (item) {
+		var idx = $scope.member.selection.indexOf(item);
+		if (idx > -1) {
+			$scope.member.selection.splice(idx, 1);
+		}
+		else {
+			$scope.member.selection.push(item);
+		};
+	};
 }]);
