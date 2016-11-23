@@ -19,6 +19,9 @@
             }).state('about_us', {
                 url: '/about_us',
                 templateUrl: 'app/partials/about_us.html'
+            }).state('tutorial', {
+                url: '/tutorial',
+                templateUrl: 'app/partials/tutorial.html'
             }).state('login', {
                 url: '/login',
                 templateUrl: 'app/partials/login.html',

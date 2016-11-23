@@ -1,0 +1,10 @@
+.profile {
+    background-image: url('../img/profile-background.jpeg');
+    background-size: cover;
+    border: 2px solid darkgreen;
+    border-radius: 30px;
+}
+
+.profile-text {
+    color: white !important;
+}
