@@ -5,53 +5,20 @@ var firebase = {
 };
 
 describe('Test admin.js', function () {
-    var paramFunction, catchFunction;
+    var paramFunction;
 
-    var firebaseParam1 = {
-        $loaded: function () {
-            return {
-                then: function (func) {
-                    return {
-                        catch: function (func) {
-                            return [];
-                        }
-                    }
-                }
-            };
-        },
-        $save: jasmine.createSpy()
+    var models = {};
+    models.getEvent = function (eventID) {
+        return this.event;
+    };
+    models.getAllTeams = function (eventID) {
+        return this.teams;
+    };
+    models.getAllMembers = function (eventID) {
+        return this.events;
     };
 
-    var firebaseParam2 = {
-        $loaded: function () {
-            return {
-                then: function (func) {
-                    paramFunction = func;
-
-                    return {
-                        catch: function (func) {
-                            catchFunction = func;
-                            return [];
-                        }
-                    }
-                }
-            };
-        }
-    };
-
-    var $firebaseObject1 = function () {
-        return firebaseParam1;
-    };
-
-    var $firebaseObject2 = function () {
-        return firebaseParam2;
-    };
-
-    var $firebaseArray = function () {
-        return [];
-    };
-
-    var $rootScope, $state, $controller, $save;
+    var $scope, $rootScope, $state, $controller, models;
 
     beforeEach(module('teamform'));
 
@@ -59,92 +26,262 @@ describe('Test admin.js', function () {
         $state = _$state_;
         $rootScope = _$rootScope_;
         $controller = _$controller_;
+        $scope = {};
 
-        spyOn($state, 'go');
-
-        createController = function ($firebaseObject, $firebaseArray) {
+        createController = function (eventID) {
             return $controller('AdminCtrl', {
-                '$scope': $rootScope,
-                '$firebaseObject': $firebaseObject,
-                '$firebaseArray': $firebaseArray,
-                '$stateParams': {},
-                '$state': $state
+                '$scope': $scope,
+                '$stateParams': {
+                    'event': eventID
+                },
+                '$state': $state,
+                'Models': models
             });
         };
     }));
 
-    it('test initial values', function () {
-        createController($firebaseObject1, $firebaseArray);
-        expect($rootScope.team.length).toBe(0);
+    it('test AdminCtrl loaded', function () {
+        models.event = {};
+        models.teams = [];
+        models.members = [];
+
+        models.event.$loaded = function () {
+            return {
+                then: function (func) {
+                    paramFunction = func;
+                }
+            }
+        };
+
+        createController("Event1");
     });
 
-    it('test successfully loaded param data with team sizes undefined', function () {
-        createController($firebaseObject2, $firebaseArray);
-        paramFunction(null);
-        expect($rootScope.param.maxTeamSize).toBe(10);
-        expect($rootScope.param.minTeamSize).toBe(1);
+    it('test $loaded.then function with undefined event', function () {
+        models.event = {};
+        models.teams = [];
+        models.members = [];
+
+        models.event.$loaded = function () {
+            return {
+                then: function (func) {
+                    paramFunction = func;
+                }
+            }
+        };
+
+        createController("Event1");
+
+        paramFunction();
     });
 
-    it('test successfully loaded param data with team sizes defined', function () {
-        createController($firebaseObject2, $firebaseArray);
-        $rootScope.param.maxTeamSize = 5;
-        $rootScope.param.minTeamSize = 0;
-        paramFunction(null);
-        catchFunction(null);
-        expect($rootScope.param.maxTeamSize).toBe(5);
-        expect($rootScope.param.minTeamSize).toBe(0);
+    it('test $loaded.then function with existing event', function () {
+        models.event = {};
+        models.teams = [];
+        models.members = [];
+
+        models.event.name = "Event1";
+        models.event.admin = {};
+        models.event.admin.name = "Admin1";
+        models.event.maxTeamSize = 8;
+        models.event.minTeamSize = 2;
+        models.event.desc = "Event Description";
+
+        models.event.$loaded = function () {
+            return {
+                then: function (func) {
+                    paramFunction = func;
+                }
+            }
+        };
+
+        createController("Event1");
+
+        paramFunction();
     });
 
-    it('test changeMinTeamSize with changes saved', function () {
-        createController($firebaseObject1, $firebaseArray);
-        $rootScope.param.maxTeamSize = 5;
-        $rootScope.param.minTeamSize = 0;
-        $rootScope.changeMinTeamSize(2);
-        expect($rootScope.param.minTeamSize).toBe(2);
+    it('test changeMinTeamSize() sucess', function () {
+        models.event = {};
+        models.teams = [];
+        models.members = [];
+
+        models.event.name = "Event1";
+        models.event.admin = {};
+        models.event.admin.name = "Admin1";
+        models.event.maxTeamSize = 8;
+        models.event.minTeamSize = 2;
+        models.event.desc = "Event Description";
+
+        models.event.$loaded = function () {
+            return {
+                then: function (func) {
+                    paramFunction = func;
+                }
+            }
+        };
+
+        createController("Event1");
+
+        $scope.changeMinTeamSize(1);
     });
 
-    it('test changeMinTeamSize with changes not saved', function () {
-        createController($firebaseObject1, $firebaseArray);
-        $rootScope.param.maxTeamSize = 5;
-        $rootScope.param.minTeamSize = 0;
-        $rootScope.changeMinTeamSize(7);
-        expect($rootScope.param.minTeamSize).toBe(0);
+    it('test changeMinTeamSize() fail', function () {
+        models.event = {};
+        models.teams = [];
+        models.members = [];
+
+        models.event.name = "Event1";
+        models.event.admin = {};
+        models.event.admin.name = "Admin1";
+        models.event.maxTeamSize = 8;
+        models.event.minTeamSize = 1;
+        models.event.desc = "Event Description";
+
+        models.event.$loaded = function () {
+            return {
+                then: function (func) {
+                    paramFunction = func;
+                }
+            }
+        };
+
+        createController("Event1");
+
+        $scope.changeMinTeamSize(-1);
     });
 
-    it('test changeMaxTeamSize with changes saved', function () {
-        createController($firebaseObject1, $firebaseArray);
-        $rootScope.param.maxTeamSize = 5;
-        $rootScope.param.minTeamSize = 0;
-        $rootScope.changeMaxTeamSize(2);
-        expect($rootScope.param.maxTeamSize).toBe(7);
+    it('test changeMaxTeamSize() sucess', function () {
+        models.event = {};
+        models.teams = [];
+        models.members = [];
+
+        models.event.name = "Event1";
+        models.event.admin = {};
+        models.event.admin.name = "Admin1";
+        models.event.maxTeamSize = 8;
+        models.event.minTeamSize = 2;
+        models.event.desc = "Event Description";
+
+        models.event.$loaded = function () {
+            return {
+                then: function (func) {
+                    paramFunction = func;
+                }
+            }
+        };
+
+        createController("Event1");
+
+        $scope.changeMaxTeamSize(-1);
     });
 
-    it('test changeMaxTeamSize with changes not saved', function () {
-        createController($firebaseObject1, $firebaseArray);
-        $rootScope.param.maxTeamSize = -2;
-        $rootScope.param.minTeamSize = 7;
-        $rootScope.changeMaxTeamSize(7);
-        expect($rootScope.param.maxTeamSize).toBe(-2);
+    it('test changeMaxTeamSize() fail', function () {
+        models.event = {};
+        models.teams = [];
+        models.members = [];
+
+        models.event.name = "Event1";
+        models.event.admin = {};
+        models.event.admin.name = "Admin1";
+        models.event.maxTeamSize = 10;
+        models.event.minTeamSize = 1;
+        models.event.desc = "Event Description";
+
+        models.event.$loaded = function () {
+            return {
+                then: function (func) {
+                    paramFunction = func;
+                }
+            }
+        };
+
+        createController("Event1");
+
+        $scope.changeMaxTeamSize(1);
     });
 
     it('test saveFunc', function () {
-        createController($firebaseObject1, $firebaseArray);
-        $rootScope.saveFunc();
-        expect($rootScope.param.$save).toHaveBeenCalled();
-        expect($state.go).toHaveBeenCalled();
+        models.event = {};
+        models.teams = [];
+        models.members = [];
+
+        models.event.name = "Event1";
+        models.event.admin = {};
+        models.event.admin.name = "Admin1";
+        models.event.maxTeamSize = 8;
+        models.event.minTeamSize = 2;
+        models.event.desc = "Event Description";
+
+        models.event.$loaded = function () {
+            return {
+                then: function (func) {
+                    paramFunction = func;
+                }
+            }
+        };
+        models.event.$save = function () {
+            return true;
+        };
+
+        createController("Event1");
+
+        $scope.saveFunc();
     });
 
-    it('test deleteFunc with confirmation', function () {
-        createController($firebaseObject1, $firebaseArray);
+    it('test deleteFunc sucess', function () {
+        models.event = {};
+        models.teams = [];
+        models.members = [];
+
+        models.event.name = "Event1";
+        models.event.admin = {};
+        models.event.admin.name = "Admin1";
+        models.event.maxTeamSize = 8;
+        models.event.minTeamSize = 2;
+        models.event.desc = "Event Description";
+
+        models.event.$loaded = function () {
+            return {
+                then: function (func) {
+                    paramFunction = func;
+                }
+            }
+        };
+        models.event.$save = function () {
+            return true;
+        };
+
+        createController("Event1");
+
         spyOn(window, 'confirm').and.returnValue(true);
-        $rootScope.deleteFunc();
-        expect($state.go).toHaveBeenCalled();
+        $scope.deleteFunc();
     });
 
-    it('test deleteFunc with no confirmation', function () {
-        createController($firebaseObject1, $firebaseArray);
+    it('test deleteFunc fail', function () {
+        models.event = {};
+        models.teams = [];
+        models.members = [];
+
+        models.event.name = "Event1";
+        models.event.admin = {};
+        models.event.admin.name = "Admin1";
+        models.event.maxTeamSize = 8;
+        models.event.minTeamSize = 2;
+        models.event.desc = "Event Description";
+
+        models.event.$loaded = function () {
+            return {
+                then: function (func) {
+                    paramFunction = func;
+                }
+            }
+        };
+        models.event.$save = function () {
+            return true;
+        };
+
+        createController("Event1");
+
         spyOn(window, 'confirm').and.returnValue(false);
-        $rootScope.deleteFunc();
-        expect($state.go).not.toHaveBeenCalled();
+        $scope.deleteFunc();
     });
 });

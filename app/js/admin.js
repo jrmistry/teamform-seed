@@ -1,6 +1,6 @@
 angular.module('teamform')
-    .controller('AdminCtrl', ['$scope', '$firebaseObject', '$firebaseArray', '$stateParams', '$state', 'Models',
-        function ($scope, $firebaseObject, $firebaseArray, $stateParams, $state, models) {
+    .controller('AdminCtrl', ['$scope', '$stateParams', '$state', 'Models',
+        function ($scope, $stateParams, $state, models) {
             // TODO: implementation of AdminCtrl
 
             var eventID = $stateParams.event;
@@ -8,7 +8,7 @@ angular.module('teamform')
             // Link and sync a firebase object
             $scope.event = models.getEvent(eventID);
             $scope.event.$loaded()
-                .then(function (data) {
+                .then(function () {
                     // Fill in some initial values when the DB entry doesn't exist
                     if (typeof $scope.event.name == "undefined") {
                         $scope.event.name = eventID;
@@ -18,13 +18,6 @@ angular.module('teamform')
                         $scope.event.minTeamSize = 1;
                         $scope.event.desc = "Event Description";
                     };
-
-                    // Enable the UI when the data is successfully loaded and synchornized
-                    $('#admin_page_controller').show();
-                })
-                .catch(function (error) {
-                    // Database connection error handling...
-                    console.error("Error:", error);
                 });
 
             $scope.teams = models.getAllTeams(eventID);
@@ -41,16 +34,13 @@ angular.module('teamform')
             $scope.changeMaxTeamSize = function (delta) {
                 var newVal = $scope.event.maxTeamSize + delta;
 
-                if (newVal >= 1 && newVal >= $scope.event.minTeamSize) {
+                if (newVal <= 10 && newVal >= $scope.event.minTeamSize) {
                     $scope.event.maxTeamSize = newVal;
                 };
             };
 
             $scope.saveFunc = function () {
                 $scope.event.$save()
-                .then( function (data) {
-                    $state.go('login');
-                });
             };
 
             // Delete Event Functionality**

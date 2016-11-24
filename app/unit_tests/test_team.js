@@ -52,7 +52,7 @@ describe('Test team.js', function () {
         expect($rootScope.param).toBe({"teamName":'',"currentTeamSize":0,"teamMembers":[]});
     });*/
 
-    it('changes team size within boundries', function () {
+/*    it('changes team size within boundries', function () {
       var controller = createController();
       $rootScope.range.minTeamSize =1;
       $rootScope.range.maxTeamSize =3;
@@ -84,6 +84,6 @@ describe('Test team.js', function () {
       var controller = createController();
       spyOn(window, 'confirm').and.returnValue(false);
       $rootScope.deleteFunc();
-    });
+    });*/
 
 });
