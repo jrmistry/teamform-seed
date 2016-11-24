@@ -1,5 +1,9 @@
 /* This is where all of the common or global css code will go. */
 
+body {
+    font-family: Century Gothic, sans-serif;
+}
+
 .box-shadow-bottom-only {
     -webkit-box-shadow: 0 8px 6px -6px dodgerblue;
     -moz-box-shadow: 0 8px 6px -6px dodgerblue;
@@ -61,4 +65,22 @@ div.center iframe {
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+
+.center {
+   text-align: center;
+}
+
+.padding-t-30 {
+    padding-top: 30px;
+}
+
+.padding-t-50 {
+    padding-top: 50px;
+}
+
+.col-center {
+    display:inline-block;
+    float:none;
+    margin-right:-4px;
 }
