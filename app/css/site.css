@@ -71,6 +71,10 @@ div.center iframe {
    text-align: center;
 }
 
+.right {
+    text-align: right;
+}
+
 .padding-t-30 {
     padding-top: 30px;
 }
@@ -83,4 +87,8 @@ div.center iframe {
     display:inline-block;
     float:none;
     margin-right:-4px;
+}
+
+.input-row {
+    display: block;
 }

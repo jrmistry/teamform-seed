@@ -1,0 +1,31 @@
+#team-creation-form {
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.team-creation-form-group {
+    padding-top: 10px;
+}
+
+.team-creation-form-group input {
+    text-align: center;
+}
+
+.team-creation-form-label {
+    display: inline-block;
+    text-align: right;
+    width: 80px;
+    padding-right: 5px;
+}   
+
+.team-creation-form-input {
+    display: inline-block;
+}
+
+#create-btn {
+    margin-top: 30px;
+    width: 50%;
+}
