@@ -26,7 +26,7 @@ module.exports = function (config) {
             'app/directives/*.js',
             'app/unit_tests/*.js'
         ],
-        exclude: ['app/unit_tests/test_team.js'],
+        //exclude: ['app/unit_tests/test_team.js'],
         preprocessors: {
             'app/js/main.js': sourcePreprocessors,
             'app/js/index.js': sourcePreprocessors,
