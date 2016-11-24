@@ -8,7 +8,7 @@ angular.module('teamform')
                 };
 
                 $scope.goToTeam = function() {
-                    $state.go("team", {event: $scope.event});
+                    $state.go("team_creation", {event: $scope.event});
                 };
 
                 $scope.goToMember = function() {

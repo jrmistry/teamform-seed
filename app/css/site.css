@@ -75,6 +75,10 @@ div.center iframe {
     text-align: right;
 }
 
+.padding-t-10 {
+    padding-top: 10px;
+}
+
 .padding-t-30 {
     padding-top: 30px;
 }

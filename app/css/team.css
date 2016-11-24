@@ -29,3 +29,38 @@
     margin-top: 30px;
     width: 50%;
 }
+
+#team-desc-container {
+    margin: 30px;
+}
+
+.team-info-container {
+    border: 10px outset dodgerblue;
+    border-radius: 30px;
+    padding: 10px;
+}
+
+.team-desc-content {
+    display: inline-block;
+    width: 40%;
+}
+
+#min-max-ctrl-container {
+    margin: 0 30px 30px;
+}
+
+.team-size-badge {
+    line-height: 20px;
+    /*padding: 0 5px;*/
+}
+
+.min-max-ctrl-label {
+    display: inline-block;
+    text-align: right;
+    width: 40%;
+}
+
+.min-max-ctrl-btns {
+    display: inline-block;
+    width: 40%;
+}
