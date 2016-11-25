@@ -1,4 +1,4 @@
-describe('Test main.js', function () {
+describe('Test models.js', function () {
 
     var modelsService;
 
@@ -26,7 +26,7 @@ describe('Test main.js', function () {
         modelsService = Models;
     }));
 
-    it('test AdminCtrl loaded', function () {
+    it('test models service', function () {
         modelsService.getAllEvents();
         modelsService.getEvent("eventId");
         modelsService.getAdmin("eventId");
