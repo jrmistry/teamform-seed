@@ -14,7 +14,10 @@
                 var TEAM = 'teams';
                 var MEMBER = 'members';
 
+                console.log(firebase.database());
+
                 this.getAllEvents = function() {
+                    console.log(firebase.database());
                     return $firebaseArray(firebase.database().ref(EVENT));
                 };
 
