@@ -1,6 +1,6 @@
 angular.module('teamform')
-	.controller('TeamCtrl', ['$scope', '$firebaseObject', '$firebaseArray', '$stateParams', '$state', 'Models',
-		function ($scope, $firebaseObject, $firebaseArray, $stateParams, $state, models) {
+	.controller('TeamCtrl', ['$scope', '$stateParams', '$state', 'Models',
+		function ($scope, $stateParams, $state, models) {
 
 			$scope.teamID = "";
 			$scope.team = {
@@ -15,7 +15,7 @@ angular.module('teamform')
 			// Link and sync a firebase object
 			$scope.event = models.getEvent(eventID);
 			$scope.event.$loaded()
-				.then(function (data) {
+				.then(function () {
 					$scope.team.size = parseInt(($scope.event.minTeamSize + $scope.event.maxTeamSize) / 2);
 				});
 
@@ -85,11 +85,7 @@ angular.module('teamform')
 			//Delete Team Functionality**
 			$scope.deleteFunc = function () {
 				if (confirm("Are you sure you want to delete this team from the event?\nCurrent team members will not be deleted.\n \nWARNING- this cannot be undone!")) {
-					//remove the event from firebase, including all child nodes
-					$scope.teamID = $.trim($scope.teamID);
-					var refPath = "events/" + eventID + "/teams/" + $scope.teamID;
-					ref = firebase.database().ref(refPath);
-					ref.remove();
+					$scope.team.$remove();
 					$state.go('login');
 				}
 			};
