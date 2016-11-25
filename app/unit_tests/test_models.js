@@ -1,3 +1,13 @@
+var firebase = {
+    database: function () {
+        return {
+            ref: function (item1) {
+                return item1;
+            }
+        }
+    }
+};
+
 describe('Test models.js', function () {
 
     var modelsService;
@@ -27,12 +37,12 @@ describe('Test models.js', function () {
     }));
 
     it('test models service', function () {
-        modelsService.getAllEvents();
-        modelsService.getEvent("eventId");
-        modelsService.getAdmin("eventId");
-        modelsService.getAllTeams("eventId");
-        modelsService.getTeam("eventId", "teamId");
-        modelsService.getAllMembers("eventId");
-        modelsService.getMember("eventId", "memberId");
+        expect(modelsService.getAllEvents()).toBe('events');
+        expect(modelsService.getEvent("eventId")).toBe('events/eventId');
+        expect(modelsService.getAdmin("eventId")).toBe('events/eventId/admin');
+        expect(modelsService.getAllTeams("eventId")).toBe('events/eventId/teams');
+        expect(modelsService.getTeam("eventId", "teamId")).toBe('events/eventId/teams/teamId');
+        expect(modelsService.getAllMembers("eventId")).toBe('events/eventId/members');
+        expect(modelsService.getMember("eventId", "memberId")).toBe('events/eventId/members/memberId');
     });
 });
