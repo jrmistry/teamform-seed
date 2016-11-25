@@ -49,6 +49,17 @@ angular.module('teamform')
 		}
 	};
 	
+	$scope.deleteFunc = function() {
+		var userID = $.trim( $scope.userID );
+		var userName = $.trim( $scope.userName );
+		if (confirm("Are you sure you want to delete this member from the database? \n \nWARNING- this cannot be undone!")) {
+		    var refPath = eventName + "/member/" + userID;
+                    var ref = firebase.database().ref(refPath);
+                    ref.remove();
+                    $state.go('login');
+                }
+	};
+	
 	$scope.refreshTeams = function() {
 		var refPath = eventName + "/team";
 		var ref = firebase.database().ref(refPath);
