@@ -1,112 +1,85 @@
 <div class="text-center">
     <h1>Team Page</h1>
-    <h2 id="text_event_name">{{event}}</h2>
+    <h2 id="text_event_name">{{event.name}}</h2>
     <div id="team_page_controller" ng-controller="TeamCtrl">
-
         <div class="row">
-
-            <div class="col-md-2 col-xs-2"></div>
-
+            <div class="col-md-8 col-xs-12 panel">
+                <strong>Event ID:</strong>
+                <span class="badge">{{event.$id}}</span>
+            </div>
+            <div class="col-md-8 col-xs-12 panel">
+                <strong>Team Lead ID:</strong>
+                <input type="text" placeholder="TeamLead" ng-model="team.leadID" required>
+            </div>
+            <div class="col-md-8 col-xs-12 panel">
+                <strong>Team Lead Name:</strong>
+                <input type="text" placeholder="Team Leader" ng-model="team.leadName" required>
+            </div>
             <div class="col-md-6 col-xs-6 text-left panel">
-
-
                 <!-- Controls go here.. -->
                 <form class="form-horizontal text-left">
-
                     <div class="form-group">
-
                         <label for="inputTeamName" class="control-label">Team Name</label>
                         <br>
-
                         <div class="row">
                             <div class="col-md-8 col-xs-8">
                                 <input type="text" class="form-control" id="inputTeamName"
-                                       placeholder="Enter your team name" ng-model="param.teamName">
+                                       placeholder="Enter your team ID" ng-model="teamID">
                             </div>
-
-                            <div class="col-md-1 col-xs-1">
-                                <button type="button" class="btn btn-primary" ng-click="saveFunc();">Add</button>
+                            <div class="col-md-1 col-xs-2">
+                                <button type="button" class="btn btn-primary" ng-click="saveFunc();">Save</button>
                             </div>
-
-                            <div class="col-md-1 col-xs-1">
+                            <div class="col-md-1 col-xs-2">
                                 <button type="button" class="btn btn-primary" ng-click="loadFunc();">Load</button>
                             </div>
-
                             <!-- Added the Delete Button**-->
-                            <div class="col-md-1 col-xs-1">
+                            <div class="col-md-1 col-xs-2">
                                 <button type="button" class="btn btn-primary" ng-click="deleteFunc();">Delete</button>
                             </div>
                         </div>
-
-
                     </div>
-
-
                     <div class="row">
                         <strong>Preferred Team Size: </strong>
 					  <span>
 						 <span class="badge">
-						   {{param.currentTeamSize}}</span>
-						  
+                             {{team.size}}</span>
 						 <button><span class="glyphicon glyphicon-plus"
                                        ng-click="changeCurrentTeamSize(1);"></span></button>
-
 						  <button><span class="glyphicon glyphicon-minus" ng-click="changeCurrentTeamSize(-1);"></span></button>
-
-						  
 					   </span>
                     </div>
-
-
                 </form>
-
-
                 <div class="row">
                     <div class="col-sm-6">
                         <h4>Team members</h4>
                         <!-- TODO: Show the current team member list -->
-
-                        <div ng-repeat="member in param.teamMembers">
+                        <div ng-repeat="member in team.teamMembers">
                             <button type="button" class="btn" ng-click="removeMember(member);">
                                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> {{member}}
                             </button>
                         </div>
-
                     </div>
-
                     <div class="col-sm-6">
                         <h4>Requests received:</h4>
-
                         <!--TODO: Show the requests -->
-
-                        <div ng-repeat="r in requests">
-                            <button type="button" class="btn" ng-click="processRequest(r);">
-                                <span class="glyphicon glyphicon-backward" aria-hidden="true"></span> {{r}}
+                        <div ng-repeat="request in requests">
+                            <button type="button" class="btn" ng-click="processRequest(request);">
+                                <span class="glyphicon glyphicon-backward" aria-hidden="true"></span> {{request}}
                             </button>
                         </div>
-
                     </div>
                 </div>
             </div>
-
             <div class="col-md-4 col-xs-4 text-left">
-
-
                 <h3>All teams:</h3>
-                <ul ng-repeat="t in team">
+                <ul ng-repeat="team in teams">
                     <li>
-
-                        User ID: {{t.$id}} <br>
-                        Preferred team size: <span class="badge">{{t.size}}</span> <br>
-                        Current team members: {{t.teamMembers}}
-
+                        User ID: {{team.$id}} <br>
+                        Preferred team size: <span class="badge">{{team.size}}</span> <br>
+                        Current team members: {{team.teamMembers}}
                     </li>
-
                 </ul>
-
             </div>
         </div>
-
-
     </div>
 </div>
