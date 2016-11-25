@@ -13,7 +13,7 @@
                 var ADMIN = 'admin';
                 var TEAM = 'teams';
                 var MEMBER = 'members';
-
+                
                 this.getAllEvents = function() {
                     return $firebaseArray(firebase.database().ref(EVENT));
                 };
