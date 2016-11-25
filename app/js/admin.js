@@ -47,11 +47,7 @@ angular.module('teamform')
             $scope.deleteFunc = function () {
                 var disclaimer = "Are you sure you want to delete this event from the database? \n \nWARNING- this cannot be undone!";
                 if (confirm(disclaimer)) {
-                    //remove the event from firebase, including all child nodes
-                    refPath = "events/" + $stateParams.event;
-                    ref = firebase.database().ref(refPath);
-                    ref.remove();
-                    //if deleted return to the index page
+                    $scope.event.$remove();
                     $state.go('login');
                 };
             };

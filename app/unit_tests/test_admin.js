@@ -1,9 +1,3 @@
-var firebase = {
-    database: function () {
-        return new window.MockFirebase("");
-    }
-};
-
 describe('Test admin.js', function () {
     var paramFunction;
 
@@ -246,7 +240,7 @@ describe('Test admin.js', function () {
                 }
             }
         };
-        models.event.$save = function () {
+        models.event.$remove = function () {
             return true;
         };
 
@@ -275,7 +269,7 @@ describe('Test admin.js', function () {
                 }
             }
         };
-        models.event.$save = function () {
+        models.event.$remove = function () {
             return true;
         };
 
