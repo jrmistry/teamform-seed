@@ -58,54 +58,16 @@ angular.module('teamform')
 				else {
 					$scope.member.selection.push(item);
 				};
+			};	
+
+			$scope.deleteFunc = function() {
+				var userID = $scope.userID;
+				if (confirm("Are you sure you want to delete this member from the database? \n \nWARNING- this cannot be undone!")) {
+				    var refPath = eventName + "/member/" + userID;
+				    var ref = firebase.database().ref(refPath);
+				    ref.remove();
+				    $state.go("member", {event: $scope.event});
+				}
 			};
-<<<<<<< HEAD
-			
-			var refPath = eventName + "/member/" + userID;
-			var ref = firebase.database().ref(refPath);
-			
-			ref.set(newData);
-		}
-	};
-	
-	$scope.deleteFunc = function() {
-		var userID = $scope.userID;
-		if (confirm("Are you sure you want to delete this member from the database? \n \nWARNING- this cannot be undone!")) {
-		    var refPath = eventName + "/member/" + userID;
-                    var ref = firebase.database().ref(refPath);
-                    ref.remove();
-                    $state.go("member", {event: $scope.event});
-                }
-	};
-	
-	$scope.refreshTeams = function() {
-		var refPath = eventName + "/team";
-		var ref = firebase.database().ref(refPath);
-		
-		// Link and sync a firebase object
-		$scope.selection = [];		
-		/*$scope.toggleSelection = function (item) {
-			var idx = $scope.selection.indexOf(item);    
-			if (idx > -1) {
-				$scope.selection.splice(idx, 1);
-			}
-			else {
-				$scope.selection.push(item);
-			}
-		};*/
-	
-		$scope.teams = $firebaseArray(ref);
-		/*$scope.teams.$loaded()
-			.then( function(data) {
-			}) 
-			.catch(function(error) {
-				// Database connection error handling...
-				//console.error("Error:", error);
-			});*/
-	};
-        
-	$scope.refreshTeams(); // call to refresh teams...
+
 }]);
-=======
-		}]);
->>>>>>> master
