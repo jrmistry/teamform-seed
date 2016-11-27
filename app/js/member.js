@@ -1,46 +1,65 @@
 angular.module('teamform')
-.controller('MemberCtrl', ['$scope', '$firebaseObject', '$firebaseArray', '$stateParams', '$state',
-	function($scope, $firebaseObject, $firebaseArray, $stateParams, $state) {
+	.controller('MemberCtrl', ['$scope', '$stateParams', '$state', 'Models',
+		function ($scope, $stateParams, $state, models) {
 
-    var eventName = $stateParams.event;
-    $scope.event = eventName;
-	$scope.userID = "";
-	$scope.userName = "";	
-	$scope.teams = {};
+			$scope.memberID = "";
+			$scope.member = {};
+			$scope.member.name = "";
+			$scope.member.selection = [];
 
-	$scope.loadFunc = function() {
-		var userID = $scope.userID;
-		if ( userID !== '' ) {
-			
-			var refPath = eventName + "/member/" + userID;
-			$scope.retrieveOnceFirebase(firebase, refPath, function(data) {
-								
-				if ( data.child("memberName").val() != null ) {
-					$scope.userName = data.child("memberName").val();
-				} else {
-					$scope.userName = "";
-				}
+			$scope.eventID = $stateParams.event;
+			$scope.members = models.getAllMembers($scope.eventID);
+			$scope.teams = models.getAllTeams($scope.eventID);
+
+			$scope.loadFunc = function () {
+				var userID = $scope.memberID;
+				if (userID !== '') {
+
+					$scope.member = models.getMember($scope.eventID, userID);
+					$scope.member.$loaded()
+						.then(function () {
+							if ($scope.member.name == null) {
+								$scope.member.name = "";
+							};
+							if ($scope.member.selection == null) {
+								$scope.member.selection = [];
+							};
+						});
+				};
+			};
+
+			$scope.saveFunc = function () {
+				$scope.memberID = $.trim($scope.memberID);
+				$scope.member.name = $.trim($scope.member.name);
+
+				if ($scope.memberID !== '' && $scope.member.name !== '') {
+					if ($scope.members.$indexFor($scope.memberID) == -1) {
+						var newData = {
+							'name': $scope.member.name,
+							'selection': $scope.member.selection
+						};
+						$scope.members.$ref().child($scope.memberID).set(newData);
+						$scope.loadFunc();
+					} else {
+						$scope.member.$save();
+					};
+				};
+			};
+
+			$scope.toggleSelection = function (item) {
+				if ($scope.member.selection == null) {
+					$scope.member.selection = [];
+				};
 				
-				if (data.child("selection").val() != null ) {
-					$scope.selection = data.child("selection").val();
+				var idx = $scope.member.selection.indexOf(item);
+				if (idx > -1) {
+					$scope.member.selection.splice(idx, 1);
 				}
 				else {
-					$scope.selection = [];
-				}
-				//$scope.$apply();
-			});
-		}
-	};
-	
-	$scope.saveFunc = function() {		
-		var userID = $.trim( $scope.userID );
-		var userName = $.trim( $scope.userName );
-		
-		if ( userID !== '' && userName !== '' ) {	
-			var newData = {				
-				'memberName': userName,
-				'selection': $scope.selection
+					$scope.member.selection.push(item);
+				};
 			};
+<<<<<<< HEAD
 			
 			var refPath = eventName + "/member/" + userID;
 			var ref = firebase.database().ref(refPath);
@@ -87,3 +106,6 @@ angular.module('teamform')
         
 	$scope.refreshTeams(); // call to refresh teams...
 }]);
+=======
+		}]);
+>>>>>>> master

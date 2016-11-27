@@ -1,58 +1,22 @@
-var firebase = {
-    database: function () {
-        return new window.MockFirebase("");
-    }
-};
-
 describe('Test member.js', function () {
-    var paramFunction, catchFunction;
+    var paramFunction;
 
-    var firebaseParam1 = {
-        $loaded: function () {
-            return {
-                then: function (func) {
-                    return {
-                        catch: function (func) {
-                            return [];
-                        }
-                    }
-                }
-            };
-        },
-        $save: jasmine.createSpy(),
-        'memberName':'Member11'
+    var models = {};
+    models.getEvent = function (eventID) {
+        return this.event;
+    };
+    models.getAllTeams = function (eventID) {
+        return this.teams;
+    };
+    models.getAllMembers = function (eventID) {
+        return this.members;
     };
 
-    var firebaseParam2 = {
-        $loaded: function () {
-            return {
-                then: function (func) {
-                    paramFunction = func;
-
-                    return {
-                        catch: function (func) {
-                            catchFunction = func;
-                            return [];
-                        }
-                    }
-                }
-            };
-        }
+    models.getMember = function (eventID, memberID) {
+        return this.member;
     };
 
-    var $firebaseObject1 = function () {
-        return firebaseParam1;
-    };
-
-    var $firebaseObject2 = function () {
-        return firebaseParam2;
-    };
-
-    var $firebaseArray = function () {
-        return [];
-    };
-
-    var $rootScope, $state, $controller, $save, testCallback, testStateGo;
+    var $scope, $rootScope, $state, $controller, models;
 
     beforeEach(module('teamform'));
 
@@ -60,135 +24,170 @@ describe('Test member.js', function () {
         $state = _$state_;
         $rootScope = _$rootScope_;
         $controller = _$controller_;
+        $scope = {};
 
-        $rootScope.retrieveOnceFirebase = function(firebase, path, callback) {
-            testCallback = callback;
-        }
-
-        spyOn($state, 'go');
-
-        createController = function ($firebaseObject, $firebaseArray) {
+        createController = function (eventID) {
             return $controller('MemberCtrl', {
-                '$scope': $rootScope,
-                '$firebaseObject': $firebaseObject,
-                '$firebaseArray': $firebaseArray,
-                '$stateParams': {},
-                '$state': $state
+                '$scope': $scope,
+                '$stateParams': {
+                    'event': eventID
+                },
+                '$state': $state,
+                'Models': models
             });
         };
     }));
 
-    it('test initial value of userID', function () {
-        createController($firebaseObject2, $firebaseArray);
-        expect($rootScope.userID).toBe('');
-    });
-    it('test initial value of userName', function () {
-        createController($firebaseObject2, $firebaseArray);
-        expect($rootScope.userName).toBe('');
-    });
-    it('test initial value of teams', function () {
-        createController($firebaseObject2, $firebaseArray);
-        expect($rootScope.teams.length).toBe($firebaseArray().length);
+    it('test MemberCtrl loaded', function () {
+        createController("Event1");
     });
 
-    it('test loadFunc success', function () {
-        createController($firebaseObject2, $firebaseArray);
+    it('test loadFunc empty userID', function () {
+        createController("Event1");
+        $scope.loadFunc();
+    });
 
-        $rootScope.userID = 'randomID';
-
-        $rootScope.loadFunc();
-
-        var testName = "testName";
-        var testSelection = ["team1", "team2"];
-
-        var dummyData = {
-            memberName: "testName",
-            selection: ["team1", "team2"],
-            child: function(name) {
+    it('test loadFunc sucess with existing member', function () {
+        models.member = {
+            name: "Member11",
+            selection: [],
+            $loaded: function () {
                 return {
-                    property: this[name],
-                    val: function() {
-                        return (this.property);
+                    then: function (func) {
+                        paramFunction = func;
+                    }
+                }
+            }
+        };
+        createController("Event1");
+        $scope.memberID = "Member11";
+
+        $scope.loadFunc();
+        paramFunction();
+    });
+
+    it('test loadFunc sucess with new member', function () {
+        models.member = {
+            $loaded: function () {
+                return {
+                    then: function (func) {
+                        paramFunction = func;
+                    }
+                }
+            }
+        };
+        createController("Event1");
+        $scope.memberID = "Member11";
+
+        $scope.loadFunc();
+        paramFunction();
+    });
+
+    it('test saveFunc fail with empty id and name', function () {
+        createController("Event1");
+
+        $scope.saveFunc();
+    });
+
+    it('test saveFunc fail with empty name', function () {
+        createController("Event1");
+
+        $scope.memberID = "Member11";
+        $scope.saveFunc();
+    });
+
+    it('test saveFunc sucess with existing member', function () {
+        models.member = {
+            $id: "Member11",
+            name: "Member11",
+            selection: [],
+            $loaded: function () {
+                return {
+                    then: function (func) {
+                        paramFunction = func;
+                    }
+                }
+            },
+            $save: function () { return true }
+        };
+
+        models.members = {
+            data: [models.member.$id],
+            $indexFor: function (memberID) {
+                return 0;
+            },
+            $ref: function () {
+                return function child(memberID) {
+                    return function set(newData) {
+                        return true;
                     }
                 }
             }
         };
 
-        testCallback(dummyData);
-        expect($rootScope.userName).toBe(testName);
-        expect($rootScope.selection.length).toBe(testSelection.length);
-        expect($rootScope.selection[0]).toBe('team1');
+        createController("Event1");
+        $scope.memberID = "Member11";
+
+        $scope.loadFunc();
+
+        $scope.saveFunc();
     });
-    it('test loadFunc bad userID', function () {
-        createController($firebaseObject2, $firebaseArray);
 
-        $rootScope.userID = '';
-
-        $rootScope.loadFunc();
-
-        expect($rootScope.userName).toBe('');
-        expect($rootScope.selection.length).toBe(0);
-    });
-    it('test loadFunc null data', function () {
-        createController($firebaseObject2, $firebaseArray);
-
-        $rootScope.userID = 'randomID';
-
-        $rootScope.loadFunc();
-
-        var testName = "testNameFail";
-
-        var dummyData = {
-            memberName: null,
-            selection: null,
-            child: function(name) {
+    it('test saveFunc sucess with new member', function () {
+        models.member = {
+            $id: "",
+            name: "",
+            selection: [],
+            $loaded: function () {
                 return {
-                    property: this[name],
-                    val: function() {
-                        console.log(this);
-                        return (this.property);
+                    then: function (func) {
+                        paramFunction = func;
+                    }
+                }
+            },
+            $save: function () { return true }
+        };
+
+        models.members = {
+            data: [models.member.$id],
+            $indexFor: function (memberID) {
+                return -1;
+            },
+            $ref: function () {
+                return {
+                    child: function (memberID) {
+                        return {
+                            set: function set(newData) {
+                                return true;
+                            }
+                        }
                     }
                 }
             }
         };
 
-        testCallback(dummyData);
-        expect($rootScope.userName).toBe('');
-        expect($rootScope.selection.length).toBe(0);
+        createController("Event1");
+        $scope.memberID = "Member11";
+        $scope.member.name = "Member11"
+        $scope.member.selection = ["Team11"];
+
+        $scope.saveFunc();
     });
 
-    it('test saveFunc success', function () {
-        createController($firebaseObject1, $firebaseArray);
-        $rootScope.$state = jasmine.createSpy();
-
-        $rootScope.userID = 'Member99';
-        $rootScope.userName = 'Member 99';
-
-        $rootScope.saveFunc();
-        expect($rootScope.userID).toBe('Member99');
-        expect($rootScope.userName).toBe('Member 99');
-    });
-    it('test saveFunc fail no name', function () {
-        createController($firebaseObject1, $firebaseArray);
-        $rootScope.$state = jasmine.createSpy();
-
-        $rootScope.userID = '';
-        $rootScope.userName = '';
-
-        $rootScope.saveFunc();
-
-        expect($rootScope.userID).toBe('');
-        expect($rootScope.userName).toBe('');
+    it('test toggleSelection with empty team', function () {
+        createController("Event1");
+        $scope.member.selection = null;
+        $scope.toggleSelection("Team11");
     });
 
-    it('test refreshTeams', function () {
-        createController($firebaseObject1, $firebaseArray);
-        $rootScope.$state = jasmine.createSpy();
+    it('test toggleSelection to add team', function () {
+        createController("Event1");
+        $scope.toggleSelection("Team11");
+    });
 
-        $rootScope.userID = 'Member99';
-        $rootScope.userName = 'Member 99';
-
-        $rootScope.refreshTeams();
-        expect($rootScope.userID).toBe($rootScope.userID);
+    it('test toggleSelection to remove team', function () {
+        createController("Event1");
+        $scope.member.selection = ["Team11", "Team12"];
+        $scope.toggleSelection("Team11");
     });
 });

@@ -3,11 +3,9 @@
 
     angular.module("teamform", ['ui.router', 'firebase']
     ).run(['$rootScope', function ($rootScope) {
-
         $rootScope.retrieveOnceFirebase = function(firebase, refPath, callbackFunc) {
             firebase.database().ref(refPath).once("value").then(callbackFunc);
         };
-
     }]).config(['$stateProvider', '$urlRouterProvider',
         function($stateProvider, $urlRouterProvider){
 
@@ -26,8 +24,8 @@
                 url: '/login',
                 templateUrl: 'app/partials/login.html',
                 controller: 'LoginCtrl'
-            }).state('admin', {
-                url: '/admin/:event',
+            }).state('events', {
+                url: '/events/:event',
                 templateUrl: 'app/partials/admin.html',
                 controller: 'AdminCtrl'
             }).state('member', {

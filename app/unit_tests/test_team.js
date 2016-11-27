@@ -1,33 +1,21 @@
-var firebase = {
-    database: function () {
-        return new window.MockFirebase("");
-    }
-};
-
 describe('Test team.js', function () {
-    var firebaseParam = {
-        $loaded: function () {
-            return {
-                then: function (func) {
-                    return {
-                        catch: function (func) {
-                            return [];
-                        }
-                    }
-                }
-            };
-        }
+    var paramFunction;
+
+    var models = {};
+    models.getEvent = function (eventID) {
+        return this.event;
+    };
+    models.getAllTeams = function (eventID) {
+        return this.teams;
+    };
+    models.getAllMembers = function (eventID) {
+        return this.events;
+    };
+    models.getTeam = function (eventID) {
+        return this.team;
     };
 
-    var $firebaseObject = function () {
-        return firebaseParam;
-    };
-
-    var $firebaseArray = function () {
-        return [];
-    };
-
-    var $rootScope, $state, $controller;
+    var $scope, $rootScope, $state, $controller, models;
 
     beforeEach(module('teamform'));
 
@@ -35,55 +23,103 @@ describe('Test team.js', function () {
         $state = _$state_;
         $rootScope = _$rootScope_;
         $controller = _$controller_;
+        $scope = {};
 
-        createController = function () {
+        createController = function (eventID) {
             return $controller('TeamCtrl', {
-                '$scope': $rootScope,
-                '$firebaseObject': $firebaseObject,
-                '$firebaseArray': $firebaseArray,
-                '$stateParams': {},
-                '$state': $state
+                '$scope': $scope,
+                '$stateParams': {
+                    'event': eventID
+                },
+                '$state': $state,
+                'Models': models
             });
         };
     }));
+    
+    it('test TeamCtrl loaded', function () {
+        models.event = {};
+        models.teams = [];
+        models.members = [];
 
-    /*it('sets initial values', function () {
-        createController($firebaseObject, $firebaseArray);
-        expect($rootScope.param).toBe({"teamName":'',"currentTeamSize":0,"teamMembers":[]});
-    });*/
+        models.event.name = "Event1";
+        models.event.admin = {};
+        models.event.admin.name = "Admin1";
+        models.event.maxTeamSize = 8;
+        models.event.minTeamSize = 2;
+        models.event.desc = "Event Description";
 
-    it('changes team size within boundries', function () {
-      var controller = createController();
-      $rootScope.range.minTeamSize =1;
-      $rootScope.range.maxTeamSize =3;
-      $rootScope.param.currentTeanSize =1;
-      expect($rootScope.changeCurrentTeamSize(-1)).toBe(1);
-      expect($rootScope.changeCurrentTeamSize(1)).toBe(2);
-      expect($rootScope.changeCurrentTeamSize(3)).toBe(3);
+        models.event.$loaded = function () {
+            return {
+                then: function (func) {
+                    paramFunction = func;
+                }
+            }
+        };
+
+        createController("Event1");
+
+        paramFunction();
     });
 
-    it('saveFunc works', function () {
-      var controller = createController();
-      $rootScope.saveFunc();
-      expect($rootScope.param.$save).toHaveBeenCalled();
-      expect($state.go).toHaveBeenCalled();
+    it('test loadFunc with empty teamID', function () {
+        models.event = {};
+        models.teams = [];
+        models.members = [];
+
+        models.event.name = "Event1";
+        models.event.admin = {};
+        models.event.admin.name = "Admin1";
+        models.event.maxTeamSize = 8;
+        models.event.minTeamSize = 2;
+        models.event.desc = "Event Description";
+
+        models.event.$loaded = function () {
+            return {
+                then: function (func) {
+                    paramFunction = func;
+                }
+            }
+        };
+
+        createController("Event1");
+
+        $scope.loadFunc();
     });
 
-    it('deleteFunc works if confirmed', function () {
-      var teamID = $.trim( $scope.param.teamName );		
-		var refPath = eventName + "/team/" + teamID ;
-		ref = firebase.database().ref(refPath);
-		ref.remove();
-      var controller = createController('$stateParams'= {"teamName":'example',"currentTeamSize":0,"teamMembers":[]});
-      spyOn(window, 'confirm').and.returnValue(true);
-      $rootScope.deleteFunc();
-      expect($rootscope.param.teamName).toHaveBeenCalled();
-    });
+    it('test loadFunc with existing teamID', function () {
+        models.event = {};
+        models.team = {};
+        models.teams = [];
+        models.members = [];
 
-    it('deleteFunc does not deleteTeam if denied', function () {
-      var controller = createController();
-      spyOn(window, 'confirm').and.returnValue(false);
-      $rootScope.deleteFunc();
-    });
+        models.event.name = "Event1";
+        models.event.admin = {};
+        models.event.admin.name = "Admin1";
+        models.event.maxTeamSize = 8;
+        models.event.minTeamSize = 2;
+        models.event.desc = "Event Description";
 
+        models.event.$loaded = function () {
+            return {
+                then: function (func) {
+                    paramFunction = func;
+                }
+            }
+        };
+        
+        models.team.$loaded = function () {
+            return {
+                then: function (func) {
+                    paramFunction = func;
+                }
+            }
+        };
+
+        createController("Event1");
+
+        $scope.teamID = "Team11";
+
+        $scope.loadFunc();
+    });
 });
