@@ -21,7 +21,7 @@ angular.module('teamform')
 
                 for (var index in $scope.teams) {
                     $scope.teams[index].id = index;
-                    if (!$scope.inTeam || $scope.member.teamID == ) {
+                    if (!$scope.inTeam || $scope.member.teamID == index) {
                         $scope.teamList.push($scope.teams[index]);
                     }
                 }
