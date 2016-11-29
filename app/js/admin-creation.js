@@ -40,6 +40,9 @@ angular.module('teamform')
                     var events = models.getAllEvents();
                     events.$loaded().then(function () {
                         events.$ref().child($scope.eventID).set(newData);
+                        $state.go("events", {
+                            eventID: $scope.eventID
+                        });
                     });
                 }
             }
