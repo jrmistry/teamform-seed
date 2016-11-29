@@ -1,48 +1,45 @@
-<div class="text-center">
-    <h1>Create New Administrator</h1>
-    <div>
-        <form class="form-horizontal">
-            <div class="form-group">
-                <label for="inputUserID" class="col-sm-3 control-label">User ID</label>
-                <div class="col-sm-5">
-                    <input type="text" class="form-control" id="inputUserID" ng-model="userID" placeholder="Enter a new User ID">
-                </div>
-            </div>
+<div class="center">
+    <h1>Create a new admin profile</h1>
 
-            <div class="form-group">
-                <label for="inputUserName" class="col-sm-3 control-label">Name</label>
-                <div class="col-sm-5">
-                    <input type="text" class="form-control" id="inputUserName" ng-model="userName" placeholder="Enter your name">
-                </div>
-            </div>
+    <form id="team-creation-form">
 
-            <div class="form-group">
-                <h3>Create a New Event</h3>
-                <label for="eventName" class="col-sm-3 control-label">Event Name</label>
-                <div class="col-sm-5">
-                    <input type="text" class="form-control" id="eventName" ng-model="eventName" placeholder="Enter the name of your event">
-                </div>
-                <br>
-                <br>
-                <br>
-                <div class="col-md-8 col-xs-8">
-                    <strong>Minimum Team Size:</strong>
+        <div class="team-creation-form-group">
+            <label for="adminName" class="team-creation-form-label">Name</label>
+            <div class="team-creation-form-input">
+                <input type="text" id="adminName" ng-model="adminName" placeholder="Enter your name">
+            </div>
+        </div>
+
+        <div class="team-creation-form-group">
+            <label for="inputEventID" class="team-creation-form-label">Event ID</label>
+            <div class="team-creation-form-input">
+                <input type="text" id="inputEventID" ng-model="eventID" placeholder="Enter unique event ID">
+            </div>
+        </div>
+
+        <div class="team-creation-form-group">
+            <label for="eventName">Event Name</label>
+            <div class="team-creation-form-input">
+                <input type="select" id="eventName" ng-model="eventName" placeholder="Enter a new event name">
+            </div>
+        </div>
+
+        <br/>
+
+        <strong>Minimum Team Size:</strong>
                 <span class="badge">
                  {{param.minTeamSize}}</span>
-                    <button><span class="glyphicon glyphicon-plus" ng-click="changeMinTeamSize(1);"></span></button>
-                    <button><span class="glyphicon glyphicon-minus" ng-click="changeMinTeamSize(-1);"></span></button>
-                    <br><br>
-                    <strong>Maximum Team Size: </strong>
+        <button><span class="glyphicon glyphicon-plus" ng-click="changeMinTeamSize(1);"></span></button>
+        <button><span class="glyphicon glyphicon-minus" ng-click="changeMinTeamSize(-1);"></span></button>
+        <br><br>
+        <strong>Maximum Team Size: </strong>
                 <span class="badge">
                  {{param.maxTeamSize}}</span>
-                    <button><span class="glyphicon glyphicon-plus" ng-click="changeMaxTeamSize(1);"></span></button>
-                    <button><span class="glyphicon glyphicon-minus" ng-click="changeMaxTeamSize(-1);"></span></button>
-                    <br><br>
-                </div>
-            </div>
+        <button><span class="glyphicon glyphicon-plus" ng-click="changeMaxTeamSize(1);"></span></button>
+        <button><span class="glyphicon glyphicon-minus" ng-click="changeMaxTeamSize(-1);"></span></button>
+        <br><br>
 
-            <button type="submit" class="btn btn-primary">Create Admin and Event</button>
+        <button id="create-btn" type="submit" class="btn btn-primary">Create!</button>
 
-        </form>
-    </div>
+    </form>
 </div>
