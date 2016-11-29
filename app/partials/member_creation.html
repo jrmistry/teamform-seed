@@ -1,40 +1,63 @@
 <div class="text-center">
     <h1>Create New Member</h1>
-    <div>
+    <p></p>
+    <div id="MemberCreationCtrl">
         <div class="row">
             <div class="col-md-2 col-xs-2"></div>
             <div class="col-md-8 col-xs-8 panel">
 
                 <form class="form-horizontal">
-                    <div class="form-group">
-                        <label for="inputUserID" class="col-sm-3 control-label">User ID</label>
-                        <div class="col-sm-5">
-                            <input type="text" class="form-control" id="inputUserID" ng-model="userID" placeholder="Enter a new User ID">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="inputUserName" class="col-sm-3 control-label">Name</label>
-                        <div class="col-sm-5">
-                            <input type="text" class="form-control" id="inputUserName" ng-model="userName" placeholder="Enter your name">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="eventName" class="col-sm-3 control-label">Event</label>
+		    <div class="form-group">
+                        <label for="eventName" class="col-sm-4 control-label">Event</label>
                         <div class="col-sm-5">
                             <input type="select" class="form-control" id="eventName" ng-model="eventName" placeholder="Enter an event">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <h4>Your team preference:</h4>
+                        <label for="inputUserID" class="col-sm-4 control-label">User ID</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" id="inputUserID" ng-model="userID" placeholder="Enter a new User ID">
+                        </div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Create Member</button>
+                    <div class="form-group">
+                        <label for="inputUserName" class="col-sm-4 control-label">Name</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" id="inputUserName" ng-model="userName" placeholder="Enter your name">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputSchool" class="col-sm-4 control-label">School</label>
+                        <div class="col-sm-5">
+                            <input type="select" class="form-control" id="inputSchool" ng-model="school" placeholder="Enter your school if applicable">
+                        </div>
+                    </div>
+
+		    <div class="form-group">
+			<label for="inputSkills" class="col-sm-4 control-label">Skills</label>
+                        <div class="col-sm-1 left">
+				    <ul>
+					<li id="inputSkills" ng-repeat="skill in member.skills track by $index">{{skill}}</li>
+				    </ul>
+			</div>
+		    </div>
+		    <div class="form-group">
+			<label for="inputSkills2" class="col-sm-4 control-label">
+			<button class="btn btn-primary" ng-click="addSkillFunc(newSkill)">Add Skill</button></label>
+			<div class="col-sm-5">
+					<input type="select" class="form-control" id="inputSkills2" ng-model="newSkill" placeholder="Enter a skill"></input>
+
+			</div>
+    
+                    </div>
+		    <p></p>
+
+                    	<button type="submit" class="btn btn-primary">Create Member</button>
 
                 </form>
-
+		
             </div>
         </div>
     </div>

@@ -12,7 +12,7 @@ angular.module('teamform')
                 };
 
                 $scope.goToMember = function() {
-                    $state.go("member", {event: $scope.event});
+                    $state.go("member_creation", {event: $scope.event});
                 };
             }
         ]
