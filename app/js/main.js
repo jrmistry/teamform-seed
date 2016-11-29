@@ -29,7 +29,7 @@
                 templateUrl: 'app/partials/admin.html',
                 controller: 'AdminCtrl'
             }).state('member', {
-                url: '/member/:event',
+                url: '/member/:event/:memberID',
                 templateUrl: 'app/partials/member.html',
                 controller: 'MemberCtrl'
             }).state('team', {

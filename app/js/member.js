@@ -2,14 +2,12 @@ angular.module('teamform')
 	.controller('MemberCtrl', ['$scope', '$stateParams', '$state', 'Models',
 		function ($scope, $stateParams, $state, models) {
 
-			$scope.memberID = "";
-			$scope.member = {};
-			$scope.member.name = "";
-			$scope.member.selection = [];
-
-			$scope.eventID = $stateParams.event;
-			$scope.members = models.getAllMembers($scope.eventID);
-			$scope.teams = models.getAllTeams($scope.eventID);
+            $scope.eventID = $stateParams.event;
+            $scope.memberID = $stateParams.memberID;
+            $scope.events = models.getEvent($scope.eventID).$loaded(function(event){
+                $scope.teams = event.teams;
+                $scope.member = event.members[$scope.memberID];
+            });
 
 			$scope.loadFunc = function () {
 				var userID = $scope.memberID;
@@ -69,5 +67,4 @@ angular.module('teamform')
 				    $state.go("member", {event: $scope.event});
 				}
 			};
-
 }]);
