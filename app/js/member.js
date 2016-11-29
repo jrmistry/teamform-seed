@@ -6,12 +6,15 @@ angular.module('teamform')
             $scope.memberID = $stateParams.memberID;
             $scope.teamList = [];
             $scope.event = models.getEvent($scope.eventID).$loaded(function(event){
+                $scope.teams = event.teams;
+
                 for (var index in $scope.teams) {
                     $scope.teams[index].id = index;
-                    $scope.teamList.push($scope)
+                    $scope.teamList.push($scope.teams[index]);
                 }
+                console.log($scope.teamList);
                 $scope.teams = event.teams;
-                
+
                 $scope.member = event.members[$scope.memberID];
             });
 
