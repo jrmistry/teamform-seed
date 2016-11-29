@@ -9,7 +9,7 @@ describe('Test admin.js', function () {
         return this.teams;
     };
     models.getAllMembers = function (eventID) {
-        return this.events;
+        return this.members;
     };
 
     var $scope, $rootScope, $state, $controller, models;

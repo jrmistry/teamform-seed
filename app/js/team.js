@@ -4,7 +4,7 @@ angular.module('teamform')
 
 			$scope.teamID = "";
 			$scope.team = {
-				"size": 0,
+				"size": 5,
 				"leadID": "",
 				"leadName": "",
 				"teamMembers": []
