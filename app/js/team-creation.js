@@ -24,7 +24,8 @@ angular.module('teamform')
                         'minSize': 2,
                         'maxSize': 10,
                         'members': [],
-                        'skills': $scope.skills
+                        'skills': $scope.skills,
+                        'id': teamID
                     };
 
                     var event = models.getEvent($scope.eventID);
