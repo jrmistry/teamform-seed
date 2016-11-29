@@ -1,6 +1,6 @@
 angular.module('teamform')
-	.controller('TeamCtrl', ['$scope', '$stateParams', '$state', 'Models',
-		function ($scope, $stateParams, $state, models) {
+	.controller('TeamCtrl', ['$scope', '$stateParams', '$state', 'Models', 'Search',
+		function ($scope, $stateParams, $state, models, search) {
 			// Both teamID and eventID will be passed in through stateParams
 			$scope.teamID = $stateParams.teamID;
 			$scope.eventID = $stateParams.eventID;
@@ -15,6 +15,10 @@ angular.module('teamform')
 			};
 
 			$scope.teamMembers = {};
+			$scope.searchResults = [];
+			$scope.invitations = [];
+			$scope.requests = [];
+			$scope.query = "";
 
 			$scope.event = models.getEvent($scope.eventID);
 
@@ -28,6 +32,10 @@ angular.module('teamform')
 					$scope.teamMembers[memberID] = members[memberID];
 				}
 			});
+
+			$scope.search = function(query) {
+				$scope.searchResults = search.forMembers($scope.event, query);
+			}
 		}
 	]
 );

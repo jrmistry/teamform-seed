@@ -15,10 +15,19 @@
     <h2 class="padding-t-30">Search for Team Members</h2>
 
     <div class="padding-t-10">
-        <input type="text" placeholder="Enter search text here">
-        <button type="button" class="btn btn-primary">Search</button>
+        <input type="text" ng-model="query" placeholder="Enter search text here">
+        <button type="button" class="btn btn-success" ng-click="search(query)">Search</button>
         <span>or</span>
-        <button type="button" class="btn btn-primary">Autofill</button>
+        <button type="button" class="btn btn-info">Autofill</button>
+    </div>
+
+    <div class="member-search-div" ng-repeat="member in searchResults">
+        <div class="member-search-card">
+            <member-card data="member"></member-card>
+        </div>
+        <div class="member-search-invite-btn">
+            <button type="button" class="btn btn-warning" ng-click="invite(member)">Invite</button>
+        </div>
     </div>
 
     <h2 class="padding-t-30">Team Members</h2>
