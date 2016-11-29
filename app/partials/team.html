@@ -12,64 +12,19 @@
         </div>
     </div>
 
-    <div id="min-max-ctrl-container" class="panel panel-info team-info-container">
-        <div class="row">
-            <!--TODO: replace the value and functions below with the actual code-->
-            <div class="min-max-ctrl-label">
-                <label>Minimum Team Size:</label>
-                <span class="badge team-size-badge">{{team.minSize}}</span>
-            </div>
-            <div class="min-max-ctrl-btns">
-                <button class="btn btn-info">
-                    <span class="glyphicon glyphicon-minus" ng-click="changeCurrentTeamSize(-1);"></span>
-                </button>
-                <button class="btn btn-primary">
-                    <span class="glyphicon glyphicon-plus" ng-click="changeCurrentTeamSize(1);"></span>
-                </button>
-            </div>
-        </div>
+    <h2 class="padding-t-30">Search for Team Members</h2>
 
-        <div class="row padding-t-10">
-            <!--TODO: replace the value and functions below with the actual code-->
-            <div class="min-max-ctrl-label">
-                <label>Maximum Team Size:</label>
-                <span class="badge team-size-badge">{{team.maxSize}}</span>
-            </div>
-            <div class="min-max-ctrl-btns">
-                <button class="btn btn-info">
-                    <span class="glyphicon glyphicon-minus" ng-click="changeCurrentTeamSize(-1);"></span>
-                </button>
-                <button class="btn btn-primary">
-                    <span class="glyphicon glyphicon-plus" ng-click="changeCurrentTeamSize(1);"></span>
-                </button>
-            </div>
-        </div>
+    <div class="padding-t-10">
+        <input type="text" placeholder="Enter search text here">
+        <button type="button" class="btn btn-primary">Search</button>
+        <span>or</span>
+        <button type="button" class="btn btn-primary">Autofill</button>
     </div>
 
-    <div class="row">
+    <h2 class="padding-t-30">Team Members</h2>
 
-        <div class="col-sm-6">
-            <h4>Team members</h4>
-            <!-- TODO: Show the current team member list -->
-
-            <div ng-repeat="member in param.teamMembers">
-                <button type="button" class="btn" ng-click="removeMember(member);">
-                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> {{member}}
-                </button>
-            </div>
-        </div>
-
-        <div class="col-sm-6">
-            <h4>Requests received:</h4>
-
-            <!--TODO: Show the requests -->
-
-            <div ng-repeat="r in requests">
-                <button type="button" class="btn" ng-click="processRequest(r);">
-                    <span class="glyphicon glyphicon-backward" aria-hidden="true"></span> {{r}}
-                </button>
-            </div>
-        </div>
-
+    <div class="member-card-div" ng-repeat="member in teamMembers">
+        <member-card data="member"></member-card>
     </div>
+
 </div>

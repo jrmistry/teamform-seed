@@ -25,15 +25,15 @@
                 templateUrl: 'app/partials/login.html',
                 controller: 'LoginCtrl'
             }).state('events', {
-                url: '/events/:event',
-                templateUrl: 'app/partials/admin.html',
+                url: '/events/:eventID',
+                templateUrl: 'app/partials/event.html',
                 controller: 'AdminCtrl'
             }).state('member', {
                 url: '/member/:event/:memberID',
                 templateUrl: 'app/partials/member.html',
                 controller: 'MemberCtrl'
             }).state('team', {
-                url: '/team/:event/:team',
+                url: '/team/:eventID/:teamID',
                 templateUrl: 'app/partials/team.html',
                 controller: 'TeamCtrl'
             }).state('admin_creation', {

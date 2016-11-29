@@ -5,7 +5,7 @@ angular.module('teamform')
                 $scope.eventID = "";
 
                 $scope.goToAdmin = function() {
-                    $state.go("events", {event: $scope.eventID});
+                    $state.go("admin_creation", {event: $scope.event});
                 };
 
                 $scope.goToTeam = function() {
@@ -26,7 +26,7 @@ angular.module('teamform')
                                 console.log("Invalid Login ID");
                             } else if (result.type == "admin") {
                                 $scope.eventID = result.event;
-                                $scope.goToAdmin();
+                                $state.go("events", {eventID: $scope.eventID, memberID: result.member});
                             } else if (result.type == "member") {
                                 $scope.eventID = result.event;
                                 $state.go("member", {event: $scope.eventID, member: result.member});
