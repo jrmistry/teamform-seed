@@ -2,6 +2,8 @@ angular.module('teamform')
 	.controller('MemberCtrl', ['$scope', '$stateParams', '$state', 'Models',
 		function ($scope, $stateParams, $state, models) {
 
+            $scope.teams = [];
+
             $scope.eventID = $stateParams.event;
             $scope.memberID = $stateParams.memberID;
             $scope.teamList = [];
@@ -11,9 +13,11 @@ angular.module('teamform')
                     $scope.teamList.push($scope)
                 }
                 $scope.teams = event.teams;
-                
                 $scope.member = event.members[$scope.memberID];
+                
             });
+
+            //$scope.teams = models.getAllTeams($scope.eventID);
 
             $scope.requestForTeam = function(teamID) {
                 if ($scope.member.invites == undefined) {
