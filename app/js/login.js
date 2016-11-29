@@ -16,8 +16,8 @@ angular.module('teamform')
                 };
                 
                 Models.getEvent("Event1").$loaded(function(data){
-                    console.log(Search.forMembers(data, "11"));
-                })
+                    console.log(Search.forMembers(data, "KYle"));
+                });
             }
         ]
 );
