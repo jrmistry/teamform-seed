@@ -1,8 +1,8 @@
 angular.module('teamform')
         .controller(
         'LoginCtrl',
-        ['$scope', '$firebaseObject', '$firebaseArray', '$state',
-            function($scope, $firebaseObject, $firebaseArray, $state,asfdasd) {
+        ['$scope', '$firebaseObject', '$firebaseArray', '$state', 'Search', 'Models',
+            function($scope, $firebaseObject, $firebaseArray, $state, Search, Models) {
                 $scope.goToAdmin = function() {
                     $state.go("events", {event: $scope.event});
                 };
