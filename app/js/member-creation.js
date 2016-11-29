@@ -24,7 +24,7 @@ angular.module('teamform')
 					'memberID': $scope.memberID
 				};
 				data.$ref().child($scope.memberID).set(newData);
-				$state.go('member', {event: $scope.eventID, member: $scope.memberID});
+				$state.go('member', {event: $scope.eventID, memberID: $scope.memberID});
 			});
 		};
 
