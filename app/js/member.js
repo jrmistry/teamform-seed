@@ -5,9 +5,11 @@ angular.module('teamform')
             $scope.eventID = $stateParams.event;
             $scope.memberID = $stateParams.memberID;
             $scope.events = models.getEvent($scope.eventID).$loaded(function(event){
-                $scope.teams = event.teams;
+                //$scope.teams = event.teams;
                 $scope.member = event.members[$scope.memberID];
             });
+
+			$scope.teams = models.getAllTeams($scope.eventID);
 
 			$scope.loadFunc = function () {
 				var userID = $scope.memberID;
