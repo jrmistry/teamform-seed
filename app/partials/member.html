@@ -1,36 +1,63 @@
 <div class="text-center">
-    <h1>Member Page</h1>
-    <div id="member_page_controller">
+    <h1>Administrative Page</h1>
+    <h2 id="text_event_name"></h2>
+    <div id="admin_page_controller">
         <div class="row">
             <div class="col-md-12 col-xs-12">
                 <strong>Event ID:</strong>
-                <span class="badge">{{eventID}}</span>
+                <span class="badge">{{event.$id}}</span>
 		<br></br>
-            </div>            
-            <div class="col-md-8 col-xs-8 panel">
-                <form class="form-horizontal">
-                    <div class="form-group">
-                        <label for="inputUserID" class="col-sm-3 control-label">User ID</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" id="inputUserID" ng-model="memberID"
-                                   placeholder="Enter your User ID">
-                        </div>
-                        <div class="col-sm-5">
-                            <button type="button" class="btn btn-primary" ng-click="saveFunc();">Save</button>
+		<p></p>
+            </div>
+	<div class="col-md-12 col-xs-12">
+            <div class="col-md-6 col-xs-6 panel">
+                <strong>Event Name:</strong>
+                <input type="text" placeholder="{{event.$id}}" ng-model="event.name" required>
+		<p></p>
+                <strong>Admin Name:</strong>
+                <input type="text" placeholder="{{event.$id}}" ng-model="event.admin.name" required>
+		<br></br>
+                <strong>Event Description:</strong>
+		<p></p>
+                <textarea rows="4" cols="50" type="text" placeholder="{{event.$id}}" ng-model="event.desc" required></textarea>
+		<br></br>
 
-                            <button type="button" class="btn btn-primary" ng-click="loadFunc();">Load</button>
-                            
-                            <button type="button" class="btn btn-primary" ng-click="deleteFunc();">Delete</button>
+                <strong>Minimum Team Size:</strong>
+                <span class="badge">
+                 {{event.minTeamSize}}</span>
+                <button><span class="glyphicon glyphicon-plus" ng-click="changeMinTeamSize(1);"></span></button>
+                <button><span class="glyphicon glyphicon-minus" ng-click="changeMinTeamSize(-1);"></span></button>
+                <p></p>
+                <strong>Maximum Team Size: </strong>
+                <span class="badge">
+                 {{event.maxTeamSize}}</span>
+                <button><span class="glyphicon glyphicon-plus" ng-click="changeMaxTeamSize(1);"></span></button>
+                <button><span class="glyphicon glyphicon-minus" ng-click="changeMaxTeamSize(-1);"></span></button>
+                <br><br>
+                <button type="button" class="btn btn-primary" ng-click="saveFunc();">Save</button>
+                <button type="button" class="btn btn-primary" ng-click="deleteFunc();">Delete Event</button>
+		<p></p>
+            </div>
+
+
+	<div class="col-md-6 col-xs-6">
+            <div class="row text-left">
+                    <h3>Your team preference:</h3>
+                    <div ng-repeat="team in teams">
+                        <div class="checkbox">
+                            <label><input type="checkbox" value="{{team.$id}}"
+                                          ng-checked="member.selection.indexOf(team.$id) > -1"
+                                          ng-click="toggleSelection(team.$id)">
+                                {{team.$id}}</label>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="inputName" class="col-sm-3 control-label">Name</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" id="inputUserName" ng-model="member.name"
-                                   placeholder="Type in your name">
-                        </div>
-                    </div>
-                </form>
+                </div>
+
+            
+	</div>
+	</div>
+    </div>
+</div>
                 <div class="row text-left">
                     <h3>Your team preference:</h3>
                     <div ng-repeat="team in teams">

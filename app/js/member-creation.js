@@ -3,7 +3,6 @@ angular.module('teamform')
         function($scope, $firebaseObject, $firebaseArray, $stateParams, $state, models) {
 		
 		$scope.memberID = "";
-		$scope.member = {};
 		$scope.eventID = "";
 		$scope.name = "";
 		$scope.school = "";
@@ -24,6 +23,7 @@ angular.module('teamform')
 					'skills': $scope.skills
 				};
 				data.$ref().child($scope.memberID).set(newData);
+				$state.go('member', {event: $scope.eventID, member: $scope.memberID});
 			});
 		};
 
