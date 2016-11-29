@@ -1,4 +1,4 @@
-describe('Test admin.js', function () {
+describe('Test event.js', function () {
     var paramFunction;
 
     var models = {};
@@ -23,7 +23,7 @@ describe('Test admin.js', function () {
         $scope = {};
 
         createController = function (eventID) {
-            return $controller('AdminCtrl', {
+            return $controller('EventCtrl', {
                 '$scope': $scope,
                 '$stateParams': {
                     'event': eventID
@@ -34,7 +34,7 @@ describe('Test admin.js', function () {
         };
     }));
 
-    it('test AdminCtrl loaded', function () {
+    it('test EventCtrl loaded', function () {
         models.event = {};
         models.teams = [];
         models.members = [];

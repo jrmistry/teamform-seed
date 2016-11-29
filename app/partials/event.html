@@ -1,67 +1,56 @@
 <div class="text-center">
-    <h1>Administrative Page</h1>
-    <h2 id="text_event_name"></h2>
-    <div id="admin_page_controller">
-        <div class="row">
-            <div class="col-md-12 col-xs-12">
-                <strong>Event ID:</strong>
-                <span class="badge">{{event.$id}}</span>
-		<br></br>
-		<p></p>
-            </div>
-	<div class="col-md-12 col-xs-12">
-            <div class="col-md-6 col-xs-6 panel">
-                <strong>Event Name:</strong>
-                <input type="text" placeholder="{{event.$id}}" ng-model="event.name" required>
-		<p></p>
-                <strong>Admin Name:</strong>
-                <input type="text" placeholder="{{event.$id}}" ng-model="event.admin.name" required>
-		<br></br>
-                <strong>Event Description:</strong>
-		<p></p>
-                <textarea rows="4" cols="50" type="text" placeholder="{{event.$id}}" ng-model="event.desc" required></textarea>
-		<br></br>
-
-                <strong>Minimum Team Size:</strong>
-                <span class="badge">
-                 {{event.minTeamSize}}</span>
-                <button><span class="glyphicon glyphicon-plus" ng-click="changeMinTeamSize(1);"></span></button>
-                <button><span class="glyphicon glyphicon-minus" ng-click="changeMinTeamSize(-1);"></span></button>
-                <p></p>
-                <strong>Maximum Team Size: </strong>
-                <span class="badge">
-                 {{event.maxTeamSize}}</span>
-                <button><span class="glyphicon glyphicon-plus" ng-click="changeMaxTeamSize(1);"></span></button>
-                <button><span class="glyphicon glyphicon-minus" ng-click="changeMaxTeamSize(-1);"></span></button>
-                <br><br>
-                <button type="button" class="btn btn-primary" ng-click="saveFunc();">Save</button>
-                <button type="button" class="btn btn-primary" ng-click="deleteFunc();">Delete Event</button>
-		<p></p>
-            </div>
-
-
-	<div class="col-md-6 col-xs-6">
-            <div class="col-md-6 col-xs-3 text-left">
-                <h3>All teams:</h3>
-                <ul ng-repeat="team in teams">
-                    <li>
-                        User ID: {{team.$id}} <br>
-                        Preferred team size: <span class="badge">{{team.size}}</span> <br>
-                        Current team members: {{team.teamMembers}}
-                    </li>
-                </ul>
-            </div>
-
-            <div class="col-md-6 col-xs-9 text-left">
-                <h3>All members:</h3>
-                <ul ng-repeat="member in members">
-                    <li>ID = {{member.$id}} <br>
-                        Name = {{member.name}} <br>
-                        request to join the following teams: {{member.selection | json}}
-                    </li>
-                </ul>
-            </div>
-	</div>
-	</div>
+    <h1>Event {{eventID}}</h1>
+    <div id="team-desc-container" class="panel panel-info team-info-container">
+        <div class="team-desc-content">
+            <label>Event:</label>
+            <span>{{event.name}}</span>
+        </div>
+        <div class="team-desc-content">
+            <label>Admin:</label>
+            <span>{{event.admin.name}}</span>
+        </div>
     </div>
+
+    <div class="team-creation-form-group event-update-info">
+        <label class="team-creation-form-label">Event Description</label>
+        <div id="event-description" class="team-creation-form-input">
+            <textarea id="eventDescTextarea" rows="2" cols="20" type="text" placeholder="{{event.desc}}" ng-model="event.desc"></textarea>
+        </div>
+    </div>
+
+    <div id="min-max-ctrl-container" class="team-creation-form-group event-update-info" >
+        <div class="row">
+            <!--TODO: replace the value and functions below with the actual code-->
+            <div class="min-max-ctrl-label">
+                <label>Minimum Team Size:</label>
+                <span class="badge team-size-badge">{{event.minTeamSize}}</span>
+            </div>
+            <div class="min-max-ctrl-btns">
+                <button class="btn btn-info" ng-click="changeMinTeamSize(-1)">
+                    <span class="glyphicon glyphicon-minus"></span>
+                </button>
+                <button class="btn btn-primary" ng-click="changeMinTeamSize(1)">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </button>
+            </div>
+        </div>
+
+        <div class="row padding-t-10">
+            <!--TODO: replace the value and functions below with the actual code-->
+            <div class="min-max-ctrl-label">
+                <label>Maximum Team Size:</label>
+                <span class="badge team-size-badge">{{event.maxTeamSize}}</span>
+            </div>
+            <div class="min-max-ctrl-btns">
+                <button class="btn btn-info" ng-click="changeMaxTeamSize(-1)">
+                    <span class="glyphicon glyphicon-minus"></span>
+                </button>
+                <button class="btn btn-primary" ng-click="changeMaxTeamSize(1)">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <button id="update-btn" type="submit" class="btn btn-primary" ng-click="updateEvent()">Update!</button>
 </div>

@@ -75,3 +75,18 @@
 .skill-item {
     text-align: left;
 }
+
+.member-search-div {
+    text-align: left;
+    margin-top: 10px;
+    vertical-align: middle;
+}
+
+.member-search-card {
+    display: inline-block;
+    width: 85%;
+}
+
+.member-search-invite-btn {
+    display: inline-block;
+}
