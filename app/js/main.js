@@ -27,7 +27,7 @@
             }).state('events', {
                 url: '/events/:eventID',
                 templateUrl: 'app/partials/event.html',
-                controller: 'AdminCtrl'
+                controller: 'EventCtrl'
             }).state('member', {
                 url: '/member/:event',
                 templateUrl: 'app/partials/member.html',

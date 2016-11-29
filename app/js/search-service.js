@@ -20,7 +20,7 @@
                         }
 
                         // search through members
-                        if (result.type == null) {
+                        if (result.type == null && event.members != undefined) {
                             Object.keys(event.members).forEach(function(key){
                                 if (key == text) {
                                     result.type = "member";
@@ -30,7 +30,7 @@
                         }
 
                         // search through teams
-                        if (result.type == null) {
+                        if (result.type == null && event.teams != undefined) {
                             Object.keys(event.teams).forEach(function(key){
                                 if (key == text) {
                                     result.type = "team";
