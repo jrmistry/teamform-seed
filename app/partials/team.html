@@ -1,14 +1,14 @@
 <div id="team_page_controller" ng-controller="TeamCtrl" class="center">
-    <h1>Team "SomeTeamName"</h1>
+    <h1>Team {{teamID}}</h1>
 
     <div id="team-desc-container" class="panel panel-info team-info-container">
         <div class="team-desc-content">
             <label>Event:</label>
-            <span>{{event}}</span>
+            <span>{{event.name}}</span>
         </div>
         <div class="team-desc-content">
             <label>Leader:</label>
-            <span>"SomeLeaderName"</span>
+            <span>{{team.leadName}}</span>
         </div>
     </div>
 
@@ -17,14 +17,14 @@
             <!--TODO: replace the value and functions below with the actual code-->
             <div class="min-max-ctrl-label">
                 <label>Minimum Team Size:</label>
-                <span class="badge team-size-badge">20</span>
+                <span class="badge team-size-badge">{{team.minSize}}</span>
             </div>
             <div class="min-max-ctrl-btns">
-                <button class="btn btn-primary">
-                    <span class="glyphicon glyphicon-plus" ng-click="changeCurrentTeamSize(1);"></span>
-                </button>
                 <button class="btn btn-info">
                     <span class="glyphicon glyphicon-minus" ng-click="changeCurrentTeamSize(-1);"></span>
+                </button>
+                <button class="btn btn-primary">
+                    <span class="glyphicon glyphicon-plus" ng-click="changeCurrentTeamSize(1);"></span>
                 </button>
             </div>
         </div>
@@ -33,14 +33,14 @@
             <!--TODO: replace the value and functions below with the actual code-->
             <div class="min-max-ctrl-label">
                 <label>Maximum Team Size:</label>
-                <span class="badge team-size-badge">30</span>
+                <span class="badge team-size-badge">{{team.maxSize}}</span>
             </div>
             <div class="min-max-ctrl-btns">
-                <button class="btn btn-primary">
-                    <span class="glyphicon glyphicon-plus" ng-click="changeCurrentTeamSize(1);"></span>
-                </button>
                 <button class="btn btn-info">
                     <span class="glyphicon glyphicon-minus" ng-click="changeCurrentTeamSize(-1);"></span>
+                </button>
+                <button class="btn btn-primary">
+                    <span class="glyphicon glyphicon-plus" ng-click="changeCurrentTeamSize(1);"></span>
                 </button>
             </div>
         </div>
