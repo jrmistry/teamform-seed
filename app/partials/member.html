@@ -61,7 +61,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="member-card-div" ng-repeat="team in teamList">
+                    <div class="member-card-div" ng-repeat="team in resultList">
                         <team-card data="team"></team-card>
                         <button class="btn btn-primary" ng-if="inTeam==false" ng-click="requestForTeam(team.id)">Request to Join</button>
                     </div>
