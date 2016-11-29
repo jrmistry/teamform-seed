@@ -31,6 +31,20 @@
             </div>
         </div>
 
+        <div class="team-creation-form-group">
+            <label id="add-skill-btn" class="team-creation-form-label">
+                <button class="btn btn-primary" ng-click="addSkillFunc(newSkill)">Add Skill</button>
+            </label>
+            <div class="team-creation-form-input">
+                <input type="select" ng-model="newSkill" placeholder="Enter a desired skill"/>
+                <div>
+                    <ul>
+                        <li class="skill-item" ng-repeat="skill in skills track by $index">{{skill}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
         <button id="create-btn" class="btn btn-primary" ng-click="createTeam()">Create!</button>
 
     </form>

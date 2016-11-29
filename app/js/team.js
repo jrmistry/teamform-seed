@@ -28,30 +28,6 @@ angular.module('teamform')
 					$scope.teamMembers[memberID] = members[memberID];
 				}
 			});
-
-			$scope.changeCurrentMinTeamSize = function (newVal) {
-				if (newVal >= 0 && newVal <= $scope.team.maxSize) {
-					$scope.team.minSize = newVal;
-					$scope.event.$save();
-				}
-			};
-
-			$scope.changeCurrentMinTeamSizeWithDelta = function (delta) {
-				var newVal = $scope.team.minSize + delta;
-				$scope.changeCurrentMinTeamSize(newVal);
-			};
-
-			$scope.changeCurrentMaxTeamSize = function (newVal) {
-				if (newVal >= 0 && newVal >= $scope.team.minSize) {
-					$scope.team.maxSize = newVal;
-					$scope.event.$save();
-				}
-			};
-
-			$scope.changeCurrentMaxTeamSizeWithDelta = function (delta) {
-				var newVal = $scope.team.maxSize + delta;
-				$scope.changeCurrentMaxTeamSize(newVal);
-			};
 		}
 	]
 );

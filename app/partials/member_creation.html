@@ -7,57 +7,63 @@
             <div class="col-md-8 col-xs-8 panel">
 
                 <form class="form-horizontal">
-		    <div class="form-group">
+                    <div class="form-group">
                         <label for="eventName" class="col-sm-4 control-label">Event</label>
                         <div class="col-sm-5">
-                            <input type="select" class="form-control" id="eventName" ng-model="eventID" placeholder="Enter an event">
+                            <input type="select" class="form-control" id="eventName" ng-model="eventID"
+                                   placeholder="Enter an event">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="inputUserID" class="col-sm-4 control-label">User ID</label>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control" id="inputUserID" ng-model="memberID" placeholder="Enter a new User ID">
+                            <input type="text" class="form-control" id="inputUserID" ng-model="memberID"
+                                   placeholder="Enter a new User ID">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="inputUserName" class="col-sm-4 control-label">Name</label>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control" id="inputUserName" ng-model="name" placeholder="Enter your name">
+                            <input type="text" class="form-control" id="inputUserName" ng-model="name"
+                                   placeholder="Enter your name">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="inputSchool" class="col-sm-4 control-label">School</label>
                         <div class="col-sm-5">
-                            <input type="select" class="form-control" id="inputSchool" ng-model="school" placeholder="Enter your school if applicable">
+                            <input type="select" class="form-control" id="inputSchool" ng-model="school"
+                                   placeholder="Enter your school if applicable">
                         </div>
                     </div>
 
-		    <div class="form-group">
-			<label for="inputSkills" class="col-sm-4 control-label">Skills</label>
+                    <div class="form-group">
+                        <label for="inputSkills" class="col-sm-4 control-label">Skills</label>
                         <div class="col-sm-1 left">
-				    <ul>
-					<li id="inputSkills" ng-repeat="skill in skills track by $index">{{skill}}</li>
-				    </ul>
-			</div>
-		    </div>
-		    <div class="form-group">
-			<label for="inputSkills2" class="col-sm-4 control-label">
-			<button class="btn btn-primary" ng-click="addSkillFunc(newSkill)">Add Skill</button></label>
-			<div class="col-sm-5">
-					<input type="select" class="form-control" id="inputSkills2" ng-model="newSkill" placeholder="Enter a skill"></input>
-
-			</div>
-    
+                            <ul>
+                                <li id="inputSkills" ng-repeat="skill in skills track by $index">{{skill}}</li>
+                            </ul>
+                        </div>
                     </div>
-		    <p></p>
+                    <div class="form-group">
+                        <label for="inputSkills2" class="col-sm-4 control-label">
+                            <button class="btn btn-primary" ng-click="addSkillFunc(newSkill)">Add Skill</button>
+                        </label>
+                        <div class="col-sm-5">
+                            <input type="select" class="form-control" id="inputSkills2" ng-model="newSkill"
+                                   placeholder="Enter a skill"/>
 
-                    	<button type="submit" class="btn btn-primary" ng-click="saveFunc()">Create Member</button>
+                        </div>
+
+                    </div>
+                    <p></p>
+
+                    <button type="submit" class="btn btn-primary" ng-click="saveFunc()">Create Member</button>
 
                 </form>
-		
+
             </div>
         </div>
     </div>
