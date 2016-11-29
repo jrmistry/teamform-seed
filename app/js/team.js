@@ -15,7 +15,7 @@ angular.module('teamform')
 			};
 
 			$scope.teamMembers = {};
-			$scope.searchResults = [];
+			$scope.searchResults = null;
 			$scope.invitations = [];
 			$scope.requests = [];
 			$scope.query = "";
@@ -33,8 +33,26 @@ angular.module('teamform')
 				}
 			});
 
+			$scope.hasNoMembers = function() {
+				return Object.keys(teamMembers).length < 1;
+			};
+
+			$scope.addMember = function(member) {
+				// TODO: vishal do this
+			};
+
 			$scope.search = function(query) {
-				$scope.searchResults = search.forMembers($scope.event, query);
+				var results = search.forMembers($scope.event, query);
+				$scope.searchResults = [];
+
+				if (results.length > 1) {
+					for (var index in results) {
+						var res = results[index];
+						if (($.inArray(res.memberId, Object.keys($scope.teamMembers)) <= -1)) {
+							$scope.searchResults.push(res);
+						}
+					}
+				}
 			}
 		}
 	]
