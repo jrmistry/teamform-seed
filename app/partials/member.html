@@ -49,28 +49,21 @@
 
                     </form>
                 </div>
-
-
                 <div class="col-md-6 col-xs-6 panel right">
                     <div class="row text-left">
                         <h3>Search for a Team:</h3>
                         <div class="form-group">
                             <label for="searchBar" class="col-sm-2 control-label">
-				<button class="btn btn-primary" ng-click="SEARCHFUNCION(searchTerm)">Search</button></label>
+				                <button class="btn btn-primary" ng-click="search(searchTerm)">Search</button>
+                            </label>
                             <div class="col-sm-8">
                                 <input type="select" class="form-control" id="searchBar" ng-model="searchTerm" placeholder="Enter a team name or skill you want to fill"></input>
-
                             </div>
                         </div>
                     </div>
-                    <div class="row text-left" ng-repeat="team in teamList">
-                        <div class="checkbox">
-                            <label><input type="checkbox" value="{{team.id}}">
-                                {{team.id}}</label>
-                        </div>
-                    </div>
-                    <div class="member-card-div" ng-repeat="team in teams">
-                        <member-card data="team"></member-card>
+                    <div class="member-card-div" ng-repeat="team in teamList">
+                        <team-card data="team"></team-card>
+                        <button class="btn btn-primary" ng-click="requestForTeam(team.id)">Request to Join</button>
                     </div>
                 </div>
             </div>

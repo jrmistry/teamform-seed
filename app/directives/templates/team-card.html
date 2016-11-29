@@ -1,31 +1,27 @@
 <div class="panel panel-info box-shadow-bottom-only margin-50">
     <div class="panel-heading">
-        <h3 class="panel-title">{{data.name}}</h3>
+        <h3 class="panel-title">{{data.id}}</h3>
     </div>
     <div class="panel-body">
         <div class="flex-container">
-            <div class="flex-row-1">
+            <label class="flex-row-1">Max Team Size: {{data.maxSize}}</label>
+            <label class="flex-row-1">Min Team Size: {{data.minSize}}</label>
+        </div>
 
-                <div class="flex-container">
-                    <label class="flex-row-1">Team ID:</label>
-                    <span class="flex-row-2">{{data.id}}</span>
-                </div>
-
-                <div class="flex-container">
-                    <label class="flex-row-1">School:</label>
-                    <span class="flex-row-2">{{data.minSize}}</span>
-                </div>
-
+        <div class="flex-container">
+            <label class="flex-row-1">Team Members:</label>
+            <div class="flex-row-3">
+                <span ng-repeat="member in data.members" class="skill-set-item">
+                            <span class="skill-set-item-content">{{member}}</span>
+                </span>
             </div>
-            <div class="flex-row-1">
-                <div class="flex-container">
-                    <label class="flex-row-1">Skill set:</label>
-                    <div class="flex-row-3">
-                        <span ng-repeat="skill in data.skills" class="skill-set-item">
-                            <span class="skill-set-item-content">{{skill}}</span>
-                        </span>
-                    </div>
-                </div>
+        </div>
+        <div class="flex-container">
+            <label class="flex-row-1">Skill set:</label>
+            <div class="flex-row-3">
+                <span ng-repeat="skill in data.skills" class="skill-set-item">
+                    <span class="skill-set-item-content">{{skill}}</span>
+                </span>
             </div>
         </div>
     </div>
