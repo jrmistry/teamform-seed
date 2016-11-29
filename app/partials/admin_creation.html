@@ -12,7 +12,7 @@
 
         <div class="team-creation-form-group">
             <label for="inputEventID" class="team-creation-form-label">Event ID</label>
-            <div class="team-creation-form-input">
+            <div class="team-creation-form-input" class="team-creation-form-input">
                 <input type="text" id="inputEventID" ng-model="eventID" placeholder="Enter unique event ID">
             </div>
         </div>
@@ -24,12 +24,12 @@
             </div>
         </div>
 
-        <br>
-        <br>
-        <strong>Event Description</strong>
-        <br>
-        <textarea rows="2" cols="30" type="text" placeholder="{{event.$id}}" ng-model="event.desc" required></textarea>
-        <br/>
+        <div class="team-creation-form-group">
+            <label class="team-creation-form-label">Event Description</label>
+            <div id="event-description" class="team-creation-form-input">
+                <textarea id="eventDescTextarea" rows="2" cols="20" type="text" placeholder="{{event.$id}}" ng-model="event.desc" required></textarea>
+            </div>
+        </div>
 
         <strong>Minimum Team Size:</strong>
                 <span class="badge">
