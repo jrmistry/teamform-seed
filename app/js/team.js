@@ -28,9 +28,11 @@ angular.module('teamform')
                 $scope.team = $scope.event.teams[$scope.teamID];
                 var members = $scope.event.members;
 
-                Object.keys($scope.event.members).forEach(function(key){
-                    $scope.event.members[key].memberID = key;
-                });
+                if ($scope.event.members != null) {
+                    Object.keys($scope.event.members).forEach(function (key) {
+                        $scope.event.members[key].memberID = key;
+                    });
+                };
 
                 for(var index in $scope.team.members) {
                     var memberID = $scope.team.members[index];
