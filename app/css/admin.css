@@ -1,3 +1,13 @@
 #event-description {
     vertical-align: top;
 }
+
+#update-btn {
+    display: block;
+    margin: auto;
+    width: 25%;
+}
+
+.event-update-info {
+    display: inline-block;
+}

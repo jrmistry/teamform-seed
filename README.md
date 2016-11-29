@@ -61,7 +61,7 @@ app/                    --> all of the source files for the application
   member.html           --> The member HTML page
   lib/                  --> Key libraries with fixed version (e.g. Angular JS 1.5.7) 
   js/                   --> User-defined JavaScript files
-     admin.js           --> The JS file for the admin page
+     event.js           --> The JS file for the admin page
      index.js           --> The JS file for the front-end page
      team.js            --> The JS file for the team page
      member.js          --> The JS file for the member page

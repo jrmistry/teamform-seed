@@ -1,4 +1,4 @@
-describe('Test admin.js', function () {
+describe('Test event.js', function () {
 
     var $rootScope, $state, $controller;
 
