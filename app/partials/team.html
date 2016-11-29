@@ -20,11 +20,11 @@
                 <span class="badge team-size-badge">{{team.minSize}}</span>
             </div>
             <div class="min-max-ctrl-btns">
-                <button class="btn btn-info">
-                    <span class="glyphicon glyphicon-minus" ng-click="changeCurrentTeamSize(-1);"></span>
+                <button class="btn btn-info" ng-click="changeCurrentMinTeamSizeWithDelta(-1)">
+                    <span class="glyphicon glyphicon-minus"></span>
                 </button>
-                <button class="btn btn-primary">
-                    <span class="glyphicon glyphicon-plus" ng-click="changeCurrentTeamSize(1);"></span>
+                <button class="btn btn-primary" ng-click="changeCurrentMinTeamSizeWithDelta(1)">
+                    <span class="glyphicon glyphicon-plus"></span>
                 </button>
             </div>
         </div>
@@ -36,40 +36,20 @@
                 <span class="badge team-size-badge">{{team.maxSize}}</span>
             </div>
             <div class="min-max-ctrl-btns">
-                <button class="btn btn-info">
-                    <span class="glyphicon glyphicon-minus" ng-click="changeCurrentTeamSize(-1);"></span>
+                <button class="btn btn-info" ng-click="changeCurrentMaxTeamSizeWithDelta(-1)">
+                    <span class="glyphicon glyphicon-minus"></span>
                 </button>
-                <button class="btn btn-primary">
-                    <span class="glyphicon glyphicon-plus" ng-click="changeCurrentTeamSize(1);"></span>
+                <button class="btn btn-primary" ng-click="changeCurrentMaxTeamSizeWithDelta(1)">
+                    <span class="glyphicon glyphicon-plus"></span>
                 </button>
             </div>
         </div>
     </div>
 
-    <div class="row">
+    <h2 class="padding-t-30">Team Members</h2>
 
-        <div class="col-sm-6">
-            <h4>Team members</h4>
-            <!-- TODO: Show the current team member list -->
-
-            <div ng-repeat="member in param.teamMembers">
-                <button type="button" class="btn" ng-click="removeMember(member);">
-                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> {{member}}
-                </button>
-            </div>
-        </div>
-
-        <div class="col-sm-6">
-            <h4>Requests received:</h4>
-
-            <!--TODO: Show the requests -->
-
-            <div ng-repeat="r in requests">
-                <button type="button" class="btn" ng-click="processRequest(r);">
-                    <span class="glyphicon glyphicon-backward" aria-hidden="true"></span> {{r}}
-                </button>
-            </div>
-        </div>
-
+    <div class="member-card-div" ng-repeat="member in teamMembers">
+        <member-card data="member"></member-card>
     </div>
+
 </div>
