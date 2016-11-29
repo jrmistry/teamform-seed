@@ -57,14 +57,11 @@
 .min-max-ctrl-label {
     display: inline-block;
     text-align: right;
-    width: 40%;
 }
 
 .min-max-ctrl-btns {
     display: inline-block;
-    text-align: left;
-    width: 40%;
-    padding-left: 10%;
+    text-align: right;
 }
 
 .member-card-div {
