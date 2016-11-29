@@ -14,8 +14,34 @@ angular.module('teamform')
 				"maxSize": 0
 			};
 
+			$scope.teamMembers = {};
+
 			$scope.event = models.getEvent($scope.eventID);
-			$scope.team = models.getTeam($scope.eventID, $scope.teamID);
+
+			$scope.event.$loaded().then(function() {
+				$scope.team = $scope.event.teams[$scope.teamID];
+				var members = $scope.event.members;
+
+				for(var index in $scope.team.members) {
+					var memberID = $scope.team.members[index];
+					members[memberID].memberId = memberID;
+					$scope.teamMembers[memberID] = members[memberID];
+				}
+			});
+			// $scope.team = models.getTeam($scope.eventID, $scope.teamID);
+            //
+			// $scope.team.$loaded().then(function () {
+			// 	console.log(Object.keys($scope.team.members).length);
+			// 	console.log($scope.team.members);
+            //
+			// 	for(var memberID in $scope.team.members) {
+			// 		var memberObj = models.getMember($scope.eventID, memberID);
+			// 		memberObj.$loaded().then(function() {
+			// 			$scope.teamMembers[memberID] = memberObj;
+			// 			console.log($scope.teamMembers);
+			// 		});
+			// 	}
+			// });
 
 		// 	$scope.requests = [];
 		// 	$scope.refreshViewRequestsReceived = function () {

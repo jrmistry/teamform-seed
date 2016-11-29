@@ -46,30 +46,20 @@
         </div>
     </div>
 
-    <div class="row">
+    <h2 class="padding-t-30">Team Members</h2>
 
-        <div class="col-sm-6">
-            <h4>Team members</h4>
-            <!-- TODO: Show the current team member list -->
-
-            <div ng-repeat="member in param.teamMembers">
-                <button type="button" class="btn" ng-click="removeMember(member);">
-                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> {{member}}
-                </button>
-            </div>
-        </div>
-
-        <div class="col-sm-6">
-            <h4>Requests received:</h4>
-
-            <!--TODO: Show the requests -->
-
-            <div ng-repeat="r in requests">
-                <button type="button" class="btn" ng-click="processRequest(r);">
-                    <span class="glyphicon glyphicon-backward" aria-hidden="true"></span> {{r}}
-                </button>
-            </div>
-        </div>
-
+    <div class="member-card-div" ng-repeat="member in teamMembers">
+        <member-card data="member"></member-card>
     </div>
+
+        <!--<div class="col-sm-6">-->
+            <!--<h4>Requests received:</h4>-->
+
+            <!--<div ng-repeat="r in requests">-->
+                <!--<button type="button" class="btn" ng-click="processRequest(r);">-->
+                    <!--<span class="glyphicon glyphicon-backward" aria-hidden="true"></span> {{r}}-->
+                <!--</button>-->
+            <!--</div>-->
+        <!--</div>-->
+
 </div>
