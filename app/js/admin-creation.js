@@ -31,10 +31,10 @@ angular.module('teamform')
                         'admin': {'name': $scope.adminName},
                         'desc':$scope.eventDesc,
                         'maxTeamSize': $scope.param.maxTeamSize,
-                        'members':{},
+                        'members':[],
                         'minTeamSize': $scope.param.minTeamSize,
                         'name': $scope.eventName,
-                        'teams':{},
+                        'teams':[],
                     };
 
                     var events = models.getAllEvents();
