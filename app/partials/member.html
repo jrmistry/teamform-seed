@@ -50,7 +50,7 @@
                     </form>
                 </div>
                 <div class="col-md-6 col-xs-6 panel right">
-                    <div class="row text-left" ng-if="$scope.inTeam==false">
+                    <div class="row text-left" ng-if="inTeam==false">
                         <h3>Search for a Team:</h3>
                         <div class="form-group">
                             <label for="searchBar" class="col-sm-2 control-label">
@@ -63,7 +63,7 @@
                     </div>
                     <div class="member-card-div" ng-repeat="team in teamList">
                         <team-card data="team"></team-card>
-                        <button class="btn btn-primary" ng-click="requestForTeam(team.id)">Request to Join</button>
+                        <button class="btn btn-primary" ng-if="inTeam==false" ng-click="requestForTeam(team.id)">Request to Join</button>
                     </div>
                 </div>
             </div>
