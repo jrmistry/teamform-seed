@@ -7,10 +7,12 @@ angular.module('teamform')
             $scope.eventID = $stateParams.event;
             $scope.memberID = $stateParams.memberID;
             $scope.teamList = [];
+            $scope.resultList = [];
+
             $scope.inTeam = true;
 
-            $scope.load = function(event){
-                $scope.event = event;
+            $scope.load = function(){
+                var event = $scope.event;
                 if (event.teams == undefined) {
                     $scope.teams = [];
                     event.teams = [];
@@ -24,14 +26,21 @@ angular.module('teamform')
                     if (!$scope.inTeam || $scope.member.teamID == index) {
                         $scope.teamList.push($scope.teams[index]);
                     }
+
+                    if ($scope.inTeam) {
+                        $scope.resultList = $scope.teamList;
+                    }
                 }
                 $scope.teams = event.teams;
             };
 
-            models.getEvent($scope.eventID).$loaded($scope.load);
+            $scope.event = models.getEvent($scope.eventID);
 
-            $scope.search = function() {
-                $scope.teamList = search.forTeams($scope.event, $scope.searchTerm);
+            $scope.event.$loaded($scope.load);
+
+            $scope.search = function(searchTerm) {
+                $scope.resultList = search.forTeams($scope.event, searchTerm);
+                console.log($scope.resultList);
             };
 
             $scope.requestForTeam = function(teamID) {
@@ -40,6 +49,8 @@ angular.module('teamform')
                     $scope.event.teams[teamID].members = [];
                 }
 
-                $scope.event.teams.members.push($scope.memberID);
+                $scope.event.teams[teamID].members.push($scope.memberID);
+                $scope.event.$save();
+                $scope.load();
             };
 }]);
