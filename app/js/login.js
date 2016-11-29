@@ -5,7 +5,7 @@ angular.module('teamform')
                 $scope.eventID = "";
 
                 $scope.goToAdmin = function() {
-                    $state.go("events", {event: $scope.eventID});
+                    $state.go("admin_creation", {event: $scope.event});
                 };
 
                 $scope.goToTeam = function() {
