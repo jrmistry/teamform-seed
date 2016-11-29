@@ -1,73 +1,49 @@
 angular.module('teamform')
-	.controller('MemberCtrl', ['$scope', '$stateParams', '$state', 'Models',
-		function ($scope, $stateParams, $state, models) {
+	.controller('MemberCtrl', ['$scope', '$stateParams', '$state', 'Models', 'Search',
+		function ($scope, $stateParams, $state, models, search) {
 
-			$scope.memberID = "";
-			$scope.member = {};
-			$scope.member.name = "";
-			$scope.member.selection = [];
+            $scope.teams = [];
 
-			$scope.eventID = $stateParams.event;
-			$scope.members = models.getAllMembers($scope.eventID);
-			$scope.teams = models.getAllTeams($scope.eventID);
+            $scope.eventID = $stateParams.event;
+            $scope.memberID = $stateParams.memberID;
+            $scope.teamList = [];
+            $scope.inTeam = true;
 
-			$scope.loadFunc = function () {
-				var userID = $scope.memberID;
-				if (userID !== '') {
+            models.getEvent($scope.eventID).$loaded(function(event){
+                $scope.event = event;
+                if (event.teams == undefined) {
+                    $scope.teams = [];
+                    event.teams = [];
+                }
+                $scope.teams = event.teams;
+                $scope.member = event.members[$scope.memberID];
+                $scope.inTeam = $scope.member.teamID != undefined;
 
-					$scope.member = models.getMember($scope.eventID, userID);
-					$scope.member.$loaded()
-						.then(function () {
-							if ($scope.member.name == null) {
-								$scope.member.name = "";
-							};
-							if ($scope.member.selection == null) {
-								$scope.member.selection = [];
-							};
-						});
-				};
-			};
+                for (var index in $scope.teams) {
+                    $scope.teams[index].id = index;
+                    if (!$scope.inTeam || $scope.member.teamID == ) {
+                        $scope.teamList.push($scope.teams[index]);
+                    }
+                }
+                $scope.teams = event.teams;
+            });
 
-			$scope.saveFunc = function () {
-				$scope.memberID = $.trim($scope.memberID);
-				$scope.member.name = $.trim($scope.member.name);
+            $scope.search = function() {
+                $scope.teamList = search.forTeams($scope.event, $scope.searchTerm);
+            };
 
-				if ($scope.memberID !== '' && $scope.member.name !== '') {
-					if ($scope.members.$indexFor($scope.memberID) == -1) {
-						var newData = {
-							'name': $scope.member.name,
-							'selection': $scope.member.selection
-						};
-						$scope.members.$ref().child($scope.memberID).set(newData);
-						$scope.loadFunc();
-					} else {
-						$scope.member.$save();
-					};
-				};
-			};
+            $scope.requestForTeam = function(teamID) {
+                if ($scope.member.invites == undefined) {
+                    $scope.member.invites = [];
+                }
+                $scope.member.invites.push(teamID);
 
-			$scope.toggleSelection = function (item) {
-				if ($scope.member.selection == null) {
-					$scope.member.selection = [];
-				};
-				
-				var idx = $scope.member.selection.indexOf(item);
-				if (idx > -1) {
-					$scope.member.selection.splice(idx, 1);
-				}
-				else {
-					$scope.member.selection.push(item);
-				};
-			};	
+                var team = $scope.teams[teamID];
 
-			$scope.deleteFunc = function() {
-				var userID = $scope.userID;
-				if (confirm("Are you sure you want to delete this member from the database? \n \nWARNING- this cannot be undone!")) {
-				    var refPath = eventName + "/member/" + userID;
-				    var ref = firebase.database().ref(refPath);
-				    ref.remove();
-				    $state.go("member", {event: $scope.event});
-				}
-			};
-
+                if (team.requests == undefined) {
+                    team.requests = [];
+                }
+                team.requests.push($scope.memberID);
+                $scope.event.$save();
+            };
 }]);

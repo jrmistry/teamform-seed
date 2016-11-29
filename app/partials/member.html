@@ -1,72 +1,69 @@
 <div class="text-center">
-    <h1>Administrative Page</h1>
+    <h1>Member Page</h1>
     <h2 id="text_event_name"></h2>
     <div id="admin_page_controller">
         <div class="row">
             <div class="col-md-12 col-xs-12">
-                <strong>Event ID:</strong>
-                <span class="badge">{{event.$id}}</span>
-		<br></br>
-		<p></p>
-            </div>
-	<div class="col-md-12 col-xs-12">
-            <div class="col-md-6 col-xs-6 panel">
-                <strong>Event Name:</strong>
-                <input type="text" placeholder="{{event.$id}}" ng-model="event.name" required>
-		<p></p>
-                <strong>Admin Name:</strong>
-                <input type="text" placeholder="{{event.$id}}" ng-model="event.admin.name" required>
-		<br></br>
-                <strong>Event Description:</strong>
-		<p></p>
-                <textarea rows="4" cols="50" type="text" placeholder="{{event.$id}}" ng-model="event.desc" required></textarea>
-		<br></br>
+                <div class="col-md-6 col-xs-6 panel left">
+                    <h3>Member Info:</h3>
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="eventName" class="col-sm-4 control-label">Event</label>
+                            <div class="col-sm-5">
+                                <input type="select" class="form-control" id="eventName" ng-model="eventID" placeholder=>
+                            </div>
+                        </div>
 
-                <strong>Minimum Team Size:</strong>
-                <span class="badge">
-                 {{event.minTeamSize}}</span>
-                <button><span class="glyphicon glyphicon-plus" ng-click="changeMinTeamSize(1);"></span></button>
-                <button><span class="glyphicon glyphicon-minus" ng-click="changeMinTeamSize(-1);"></span></button>
-                <p></p>
-                <strong>Maximum Team Size: </strong>
-                <span class="badge">
-                 {{event.maxTeamSize}}</span>
-                <button><span class="glyphicon glyphicon-plus" ng-click="changeMaxTeamSize(1);"></span></button>
-                <button><span class="glyphicon glyphicon-minus" ng-click="changeMaxTeamSize(-1);"></span></button>
-                <br><br>
-                <button type="button" class="btn btn-primary" ng-click="saveFunc();">Save</button>
-                <button type="button" class="btn btn-primary" ng-click="deleteFunc();">Delete Event</button>
-		<p></p>
-            </div>
+                        <div class="form-group">
+                            <label for="inputUserID" class="col-sm-4 control-label">User ID</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" id="inputUserID" ng-model="memberID" placeholder="Enter a new User ID">
+                            </div>
+                        </div>
 
+                        <div class="form-group">
+                            <label for="inputUserName" class="col-sm-4 control-label">Name</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" id="inputUserName" ng-model="member.name" placeholder="Enter your name">
+                            </div>
+                        </div>
 
-	<div class="col-md-6 col-xs-6">
-            <div class="row text-left">
-                    <h3>Your team preference:</h3>
-                    <div ng-repeat="team in teams">
-                        <div class="checkbox">
-                            <label><input type="checkbox" value="{{team.$id}}"
-                                          ng-checked="member.selection.indexOf(team.$id) > -1"
-                                          ng-click="toggleSelection(team.$id)">
-                                {{team.$id}}</label>
+                        <div class="form-group">
+                            <label for="inputSchool" class="col-sm-4 control-label">School</label>
+                            <div class="col-sm-5">
+                                <input type="select" class="form-control" id="inputSchool" ng-model="member.school" placeholder="Enter your school if applicable">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputSkills" class="col-sm-4 control-label">Skills</label>
+                            <div class="col-sm-1 left">
+                                <ul>
+                                    <li id="inputSkills" ng-repeat="skill in member.skills track by $index">{{skill}}</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <p></p>
+
+                        <button type="submit" class="btn btn-primary" ng-click="saveFunc()">Update Profile</button>
+
+                    </form>
+                </div>
+                <div class="col-md-6 col-xs-6 panel right">
+                    <div class="row text-left" ng-if="$scope.inTeam==false">
+                        <h3>Search for a Team:</h3>
+                        <div class="form-group">
+                            <label for="searchBar" class="col-sm-2 control-label">
+				                <button class="btn btn-primary" ng-click="search(searchTerm)">Search</button>
+                            </label>
+                            <div class="col-sm-8">
+                                <input type="select" class="form-control" id="searchBar" ng-model="searchTerm" placeholder="Enter a team name or skill you want to fill"></input>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-            
-	</div>
-	</div>
-    </div>
-</div>
-                <div class="row text-left">
-                    <h3>Your team preference:</h3>
-                    <div ng-repeat="team in teams">
-                        <div class="checkbox">
-                            <label><input type="checkbox" value="{{team.$id}}"
-                                          ng-checked="member.selection.indexOf(team.$id) > -1"
-                                          ng-click="toggleSelection(team.$id)">
-                                {{team.$id}}</label>
-                        </div>
+                    <div class="member-card-div" ng-repeat="team in teamList">
+                        <team-card data="team"></team-card>
+                        <button class="btn btn-primary" ng-click="requestForTeam(team.id)">Request to Join</button>
                     </div>
                 </div>
             </div>

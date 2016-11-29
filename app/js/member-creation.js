@@ -20,7 +20,8 @@ angular.module('teamform')
 					'name': $scope.name,
 					'school': $scope.school,
 					'selection': $scope.selection,
-					'skills': $scope.skills
+					'skills': $scope.skills,
+					'memberID': $scope.memberID
 				};
 				data.$ref().child($scope.memberID).set(newData);
 				$state.go('member', {event: $scope.eventID, member: $scope.memberID});
