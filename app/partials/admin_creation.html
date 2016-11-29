@@ -31,18 +31,39 @@
             </div>
         </div>
 
-        <strong>Minimum Team Size:</strong>
-                <span class="badge">
-                 {{param.minTeamSize}}</span>
-        <button><span class="glyphicon glyphicon-plus" ng-click="changeMinTeamSize(1);"></span></button>
-        <button><span class="glyphicon glyphicon-minus" ng-click="changeMinTeamSize(-1);"></span></button>
-        <br><br>
-        <strong>Maximum Team Size: </strong>
-                <span class="badge">
-                 {{param.maxTeamSize}}</span>
-        <button><span class="glyphicon glyphicon-plus" ng-click="changeMaxTeamSize(1);"></span></button>
-        <button><span class="glyphicon glyphicon-minus" ng-click="changeMaxTeamSize(-1);"></span></button>
-        <br><br>
+        <div id="min-max-ctrl-container" class="team-creation-form-group">
+            <div class="row">
+                <!--TODO: replace the value and functions below with the actual code-->
+                <div class="min-max-ctrl-label">
+                    <label>Minimum Team Size:</label>
+                    <span class="badge team-size-badge">{{param.minTeamSize}}</span>
+                </div>
+                <div class="min-max-ctrl-btns">
+                    <button class="btn btn-info" ng-click="changeMinTeamSize(-1)">
+                        <span class="glyphicon glyphicon-minus"></span>
+                    </button>
+                    <button class="btn btn-primary" ng-click="changeMinTeamSize(1)">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="row padding-t-10">
+                <!--TODO: replace the value and functions below with the actual code-->
+                <div class="min-max-ctrl-label">
+                    <label>Maximum Team Size:</label>
+                    <span class="badge team-size-badge">{{param.maxTeamSize}}</span>
+                </div>
+                <div class="min-max-ctrl-btns">
+                    <button class="btn btn-info" ng-click="changeMaxTeamSize(-1)">
+                        <span class="glyphicon glyphicon-minus"></span>
+                    </button>
+                    <button class="btn btn-primary" ng-click="changeMaxTeamSize(1)">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
 
         <button id="create-btn" type="submit" class="btn btn-primary" ng-click="createEvent()">Create!</button>
 
