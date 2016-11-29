@@ -25,19 +25,23 @@ angular.module('teamform')
 				$scope.member.school = $.trim($scope.member.school);
 
 
-				if ($scope.memberID !== '' && $scope.member.name !== '') {
-					if ($scope.members.$indexFor($scope.memberID) == -1) {
+				//if ($scope.memberID !== '' && $scope.member.name !== '') {
+					//if ($scope.members.$indexFor($scope.memberID) == -1) {
 						var newData = {
 							'name': $scope.member.name,
 							'school': $scope.member.school,
 							'selection': $scope.member.selection,
 							'skills': $scope.member.skills
 						};
+						console.log(newData);
+						console.log($scope.memberID);
 						$scope.members.$ref().child($scope.memberID).set(newData);
-					} else {
 						$scope.member.$save();
-					};
-				};
+					//} else {
+						//$scope.member.$save();
+						//$state.go('member', );
+					//};
+				//};
 		};
 
 }]);
