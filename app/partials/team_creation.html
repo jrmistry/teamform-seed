@@ -4,6 +4,13 @@
     <form id="team-creation-form">
 
         <div class="team-creation-form-group">
+            <label for="inputUserID" class="team-creation-form-label">Event ID</label>
+            <div class="team-creation-form-input">
+                <input type="text" id="inputEventID" ng-model="eventID" placeholder="Enter the event ID">
+            </div>
+        </div>
+
+        <div class="team-creation-form-group">
             <label for="inputUserID" class="team-creation-form-label">User ID</label>
             <div class="team-creation-form-input">
                 <input type="text" id="inputUserID" ng-model="userID" placeholder="Enter a unique user ID">
@@ -18,13 +25,13 @@
         </div>
 
         <div class="team-creation-form-group">
-            <label for="teamName" class="team-creation-form-label">Team</label>
+            <label for="teamName" class="team-creation-form-label">Team ID</label>
             <div class="team-creation-form-input">
-                <input type="select" id="teamName" ng-model="teamName" placeholder="Enter a new team name">
+                <input type="select" id="teamName" ng-model="teamName" placeholder="Enter a new team ID">
             </div>
         </div>
 
-        <button id="create-btn" type="submit" class="btn btn-primary">Create!</button>
+        <button id="create-btn" class="btn btn-primary" ng-click="createTeam()">Create!</button>
 
     </form>
 </div>
