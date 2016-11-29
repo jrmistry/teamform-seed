@@ -62,5 +62,7 @@
 
 .min-max-ctrl-btns {
     display: inline-block;
+    text-align: left;
     width: 40%;
+    padding-left: 10%;
 }

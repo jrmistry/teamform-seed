@@ -33,7 +33,7 @@
                 templateUrl: 'app/partials/member.html',
                 controller: 'MemberCtrl'
             }).state('team', {
-                url: '/team/:event',
+                url: '/team/:eventID/:teamID',
                 templateUrl: 'app/partials/team.html',
                 controller: 'TeamCtrl'
             }).state('admin_creation', {
