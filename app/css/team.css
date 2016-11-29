@@ -18,7 +18,7 @@
     display: inline-block;
     text-align: right;
     width: 80px;
-    padding-right: 5px;
+    margin-right: 10px;
 }   
 
 .team-creation-form-input {
@@ -66,4 +66,12 @@
 
 .member-card-div {
     margin-top: 20px;
+}
+
+#add-skill-btn {
+    vertical-align: top;
+}
+
+.skill-item {
+    text-align: left;
 }

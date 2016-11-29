@@ -5,6 +5,12 @@ angular.module('teamform')
             $scope.teamName = "";
             $scope.userName = "";
             $scope.userID = "";
+            $scope.skills = [];
+
+            $scope.addSkillFunc = function (skill) {
+                $scope.skills.push(skill);
+                $scope.newSkill="";
+            };
 
             $scope.createTeam = function () {
                 $scope.eventID = $.trim($scope.eventID);
@@ -17,7 +23,8 @@ angular.module('teamform')
                         'size': 0,
                         'minSize': 2,
                         'maxSize': 10,
-                        'members': []
+                        'members': [],
+                        'skills': $scope.skills
                     };
 
                     var event = models.getEvent($scope.eventID);
