@@ -67,5 +67,16 @@
                     });
                     return resultList;
                 };
+
+                this.forTeams = function(event, search) {
+                    var text = search.toLowerCase();
+                    var resultList = [];
+                    Object.keys(event.teams).forEach(function(key){
+                        if (key.toLowerCase().indexOf(text) > -1) {
+                            resultList.push(event.teams[key]);
+                        }
+                    });
+                    return resultList;
+                };
             }]);
 }(angular));
