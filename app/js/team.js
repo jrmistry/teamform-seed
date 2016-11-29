@@ -22,20 +22,37 @@ angular.module('teamform')
 
 			$scope.event = models.getEvent($scope.eventID);
 
-			$scope.event.$loaded().then(function() {
-				$scope.team = $scope.event.teams[$scope.teamID];
-				var members = $scope.event.members;
+            $scope.load = function() {
+                $scope.query = "";
+                $scope.searchResults = [];
+                $scope.team = $scope.event.teams[$scope.teamID];
+                var members = $scope.event.members;
 
-				for(var index in $scope.team.members) {
-					var memberID = $scope.team.members[index];
-					members[memberID].memberId = memberID;
-					$scope.teamMembers[memberID] = members[memberID];
-				}
-			});
+                Object.keys($scope.event.members).forEach(function(key){
+                    $scope.event.members[key].memberID = key;
+                });
+
+                for(var index in $scope.team.members) {
+                    var memberID = $scope.team.members[index];
+                    $scope.teamMembers[memberID] = members[memberID];
+                }
+            };
+
+			$scope.event.$loaded().then($scope.load);
 
 			$scope.search = function(query) {
 				$scope.searchResults = search.forMembers($scope.event, query);
-			}
+			};
+
+            $scope.addMember = function(memberID) {
+                if ($scope.team.members == undefined) {
+                    $scope.team.members = [];
+                }
+                $scope.team.members.push(memberID);
+                $scope.event.members[memberID].teamID = $scope.teamID;
+                $scope.event.$save();
+                $scope.load();
+            };
 		}
 	]
 );
