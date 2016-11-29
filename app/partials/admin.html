@@ -3,29 +3,31 @@
     <h2 id="text_event_name"></h2>
     <div id="admin_page_controller">
         <div class="row">
-            <div class="col-md-8 col-xs-12 panel">
+            <div class="col-md-12 col-xs-12">
                 <strong>Event ID:</strong>
                 <span class="badge">{{event.$id}}</span>
+		<br></br>
+		<p></p>
             </div>
-            <div class="col-md-8 col-xs-12 panel">
+	<div class="col-md-12 col-xs-12">
+            <div class="col-md-6 col-xs-6 panel">
                 <strong>Event Name:</strong>
                 <input type="text" placeholder="{{event.$id}}" ng-model="event.name" required>
-            </div>
-            <div class="col-md-8 col-xs-12 panel">
+		<p></p>
                 <strong>Admin Name:</strong>
                 <input type="text" placeholder="{{event.$id}}" ng-model="event.admin.name" required>
-            </div>
-            <div class="col-md-8 col-xs-12 panel">
+		<br></br>
                 <strong>Event Description:</strong>
+		<p></p>
                 <textarea rows="4" cols="50" type="text" placeholder="{{event.$id}}" ng-model="event.desc" required></textarea>
-            </div>
-            <div class="col-md-8 col-xs-8 panel">
+		<br></br>
+
                 <strong>Minimum Team Size:</strong>
                 <span class="badge">
                  {{event.minTeamSize}}</span>
                 <button><span class="glyphicon glyphicon-plus" ng-click="changeMinTeamSize(1);"></span></button>
                 <button><span class="glyphicon glyphicon-minus" ng-click="changeMinTeamSize(-1);"></span></button>
-                <br><br>
+                <p></p>
                 <strong>Maximum Team Size: </strong>
                 <span class="badge">
                  {{event.maxTeamSize}}</span>
@@ -33,13 +35,13 @@
                 <button><span class="glyphicon glyphicon-minus" ng-click="changeMaxTeamSize(-1);"></span></button>
                 <br><br>
                 <button type="button" class="btn btn-primary" ng-click="saveFunc();">Save</button>
-                <!-- Delete Button** -->
                 <button type="button" class="btn btn-primary" ng-click="deleteFunc();">Delete Event</button>
+		<p></p>
             </div>
-        </div>
-        <hr>
-        <div class="row">
-            <div class="col-md-6 col-xs-6 text-right">
+
+
+	<div class="col-md-6 col-xs-6">
+            <div class="col-md-6 col-xs-3 text-left">
                 <h3>All teams:</h3>
                 <ul ng-repeat="team in teams">
                     <li>
@@ -50,7 +52,7 @@
                 </ul>
             </div>
 
-            <div class="col-md-6 col-xs-6 text-left">
+            <div class="col-md-6 col-xs-9 text-left">
                 <h3>All members:</h3>
                 <ul ng-repeat="member in members">
                     <li>ID = {{member.$id}} <br>
@@ -59,6 +61,7 @@
                     </li>
                 </ul>
             </div>
-        </div>
+	</div>
+	</div>
     </div>
 </div>
