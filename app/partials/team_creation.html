@@ -1,37 +1,30 @@
-<div class="text-center">
-    <h1>Create New Team Leader</h1>
-    <div>
-        <div class="row">
-            <div class="col-md-2 col-xs-2"></div>
-            <div class="col-md-8 col-xs-8 panel">
+<div class="center">
+    <h1>Create a new team leader profile</h1>
 
-                <form class="form-horizontal">
-                    <div class="form-group">
-                        <label for="inputUserID" class="col-sm-3 control-label">User ID</label>
-                        <div class="col-sm-5">
-                            <input type="text" class="form-control" id="inputUserID" ng-model="userID" placeholder="Enter a new User ID">
-                        </div>
-                    </div>
+    <form id="team-creation-form">
 
-                    <div class="form-group">
-                        <label for="inputUserName" class="col-sm-3 control-label">Name</label>
-                        <div class="col-sm-5">
-                            <input type="text" class="form-control" id="inputUserName" ng-model="userName" placeholder="Enter your name">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="teamName" class="col-sm-3 control-label">Team</label>
-                        <div class="col-sm-5">
-                            <input type="select" class="form-control" id="teamName" ng-model="teamName" placeholder="Enter a new team name">
-                        </div>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary">Create Team Leader and Team</button>
-
-                </form>
-
+        <div class="team-creation-form-group">
+            <label for="inputUserID" class="team-creation-form-label">User ID</label>
+            <div class="team-creation-form-input">
+                <input type="text" id="inputUserID" ng-model="userID" placeholder="Enter a unique user ID">
             </div>
         </div>
-    </div>
+
+        <div class="team-creation-form-group">
+            <label for="inputUserName" class="team-creation-form-label">Name</label>
+            <div class="team-creation-form-input">
+                <input type="text" id="inputUserName" ng-model="userName" placeholder="Enter your name">
+            </div>
+        </div>
+
+        <div class="team-creation-form-group">
+            <label for="teamName" class="team-creation-form-label">Team</label>
+            <div class="team-creation-form-input">
+                <input type="select" id="teamName" ng-model="teamName" placeholder="Enter a new team name">
+            </div>
+        </div>
+
+        <button id="create-btn" type="submit" class="btn btn-primary">Create!</button>
+
+    </form>
 </div>
