@@ -4,71 +4,66 @@
     <div id="admin_page_controller">
         <div class="row">
             <div class="col-md-12 col-xs-12">
-                <strong>Event ID:</strong>
-                <span class="badge">{{event.$id}}</span>
-		<br>
-		<p></p>
-            </div>
-	<div class="col-md-12 col-xs-12">
-            <div class="col-md-8 col-xs-8 panel left">
-
-                <form class="form-horizontal">
-		    <div class="form-group">
-                        <label for="eventName" class="col-sm-4 control-label">Event</label>
-                        <div class="col-sm-5">
-                            <input type="select" class="form-control" id="eventName" ng-model="eventID" placeholder= >
+                <div class="col-md-6 col-xs-6 panel left">
+                    <h3>Member Info:</h3>
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="eventName" class="col-sm-4 control-label">Event</label>
+                            <div class="col-sm-5">
+                                <input type="select" class="form-control" id="eventName" ng-model="eventID" placeholder=>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        <label for="inputUserID" class="col-sm-4 control-label">User ID</label>
-                        <div class="col-sm-5">
-                            <input type="text" class="form-control" id="inputUserID" ng-model="member.memberID" placeholder="Enter a new User ID">
+                        <div class="form-group">
+                            <label for="inputUserID" class="col-sm-4 control-label">User ID</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" id="inputUserID" ng-model="memberID" placeholder="Enter a new User ID">
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        <label for="inputUserName" class="col-sm-4 control-label">Name</label>
-                        <div class="col-sm-5">
-                            <input type="text" class="form-control" id="inputUserName" ng-model="member.name" placeholder="Enter your name">
+                        <div class="form-group">
+                            <label for="inputUserName" class="col-sm-4 control-label">Name</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" id="inputUserName" ng-model="member.name" placeholder="Enter your name">
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        <label for="inputSchool" class="col-sm-4 control-label">School</label>
-                        <div class="col-sm-5">
-                            <input type="select" class="form-control" id="inputSchool" ng-model="member.school" placeholder="Enter your school if applicable">
+                        <div class="form-group">
+                            <label for="inputSchool" class="col-sm-4 control-label">School</label>
+                            <div class="col-sm-5">
+                                <input type="select" class="form-control" id="inputSchool" ng-model="member.school" placeholder="Enter your school if applicable">
+                            </div>
                         </div>
-                    </div>
 
-		    <div class="form-group">
-			<label for="inputSkills" class="col-sm-4 control-label">Skills</label>
-                        <div class="col-sm-1 left">
-				    <ul>
-					<li id="inputSkills" ng-repeat="skill in member.skills track by $index">{{skill}}</li>
-				    </ul>
-			</div>
-		    </div>
-		    <p></p>
+                        <div class="form-group">
+                            <label for="inputSkills" class="col-sm-4 control-label">Skills</label>
+                            <div class="col-sm-1 left">
+                                <ul>
+                                    <li id="inputSkills" ng-repeat="skill in member.skills track by $index">{{skill}}</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <p></p>
 
-                    	<button type="submit" class="btn btn-primary" ng-click="saveFunc()">Update Profile</button>
+                        <button type="submit" class="btn btn-primary" ng-click="saveFunc()">Update Profile</button>
 
-                </form>
-	    </div>
+                    </form>
+                </div>
 
 
-	<div class="col-md-6 col-xs-6 panel">
-            <div class="row text-left">
-                    <h3>Search for a Team:</h3>
-		   	<div class="form-group">
-				<label for="searchBar" class="col-sm-4 control-label">
+                <div class="col-md-6 col-xs-6 panel right">
+                    <div class="row text-left">
+                        <h3>Search for a Team:</h3>
+                        <div class="form-group">
+                            <label for="searchBar" class="col-sm-2 control-label">
 				<button class="btn btn-primary" ng-click="SEARCHFUNCION(searchTerm)">Search</button></label>
-				<div class="col-sm-5">
-						<input type="select" class="form-control" id="searchBar" ng-model="searchTerm" placeholder="Enter a team name or skill"></input>
+                            <div class="col-sm-8">
+                                <input type="select" class="form-control" id="searchBar" ng-model="searchTerm" placeholder="Enter a team name or skill you want to fill"></input>
 
-				</div>
-                    	</div>
-                    <div ng-repeat="team in teams">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row text-left" ng-repeat="team in teams">
                         <div class="checkbox">
                             <label><input type="checkbox" value="{{team.$id}}"
                                           ng-checked="member.selection.indexOf(team.$id) > -1"
@@ -76,8 +71,11 @@
                                 {{team.$id}}</label>
                         </div>
                     </div>
+                    <div class="member-card-div" ng-repeat="team in teams">
+                        <member-card data="team"></member-card>
+                    </div>
                 </div>
-	    </div>
-	</div>
+            </div>
+        </div>
     </div>
 </div>
