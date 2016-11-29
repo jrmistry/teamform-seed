@@ -21,18 +21,19 @@ angular.module('teamform')
                     events.$loaded()
                         .then(function () {
                             var result = search.globalUserSearch(events, $scope.loginID);
+                            console.log(result);
 
                             if (result == null) {
                                 console.log("Invalid Login ID");
                             } else if (result.type == "admin") {
                                 $scope.eventID = result.event;
-                                $state.go("events", {eventID: $scope.eventID, memberID: result.member});
+                                $state.go("events", {eventID: result.event});
                             } else if (result.type == "member") {
                                 $scope.eventID = result.event;
-                                $state.go("member", {event: $scope.eventID, member: result.member});
+                                $state.go("member", {event: result.event, memberID: result.id});
                             } else if (result.type == "team") {
                                 $scope.eventID = result.event;
-                                $state.go("team", {event: $scope.eventID, team: result.team});
+                                $state.go("team", {eventID: result.event, teamID: result.team});
                             }
                         });
                 };
